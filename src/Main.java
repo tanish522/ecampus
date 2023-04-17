@@ -22,19 +22,21 @@ public class Main {
                     // student login
                     int ch2;
                     do{
-                        System.out.println("\n1. Login \n2. Register \n3.Exit");
+                        System.out.println("\n1) Login \n2) Forgot password \n3) Exit");
                         ch2 = sc.nextInt();
                         switch (ch2){
                             case 1:{
-                                //Call Student Login Method
+                                System.out.print("\nEnter StudentId: ");
+                                String studId = sc.next();
+                                String password = hiddenPassword();
+                                Student currstud = new Student();
                                 break;
                             }
-                            case 2:{
-                                //Call Student Register method
-                                break;
+                            case 2: {
+                                //forgot password
                             }
                             case 3:{
-                                System.out.println("Exiting");
+                                System.out.println("Exit");
                                 break;
                             }
                             default:{
@@ -51,7 +53,7 @@ public class Main {
                     // teacher login
                     int ch2;
                     do{
-                        System.out.println("\n1. Login \n2. Register \n3.Exit");
+                        System.out.println("\n1) Login \n2) Register \n3) Forgot password \n4) Exit");
                         ch2 = sc.nextInt();
                         switch (ch2){
                             case 1:{
@@ -59,10 +61,15 @@ public class Main {
                                 break;
                             }
                             case 2:{
+
                                 //Call Teacher Register method
                                 break;
                             }
                             case 3:{
+                                //forgot password
+                                break;
+                            }
+                            case 4:{
                                 System.out.println("Exiting");
                                 break;
                             }
@@ -76,7 +83,7 @@ public class Main {
                     break;
                 }
                 case 3:{
-                    System.out.println("Exiting");
+                    System.out.println("Exit");
                     break;
                 }
                 default:
