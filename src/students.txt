@@ -1,0 +1,3 @@
+// studId name password totalCredits attainedCredits overallGrade percentileList
+abcsc,1,23
+bcvdd,2,33

@@ -39,33 +39,42 @@ public class Teacher {
         }
     }
 
-    public void registerTeacher(HashMap<String,Teacher> teacherDetails ,Scanner sc){
-        System.out.print("Enter Course ID: ");
-        courseID = sc.nextLine();
-        System.out.print("Enter Course Name: ");
-        courseName = sc.nextLine();
-        System.out.print("Enter Passing Criteria (%): ");
-        passingCriteria = sc.nextInt();
+    /*
+    Register Teacher will take object of teachers details(hashmap) and register teacher and add it to the map
+    */
+    public void registerTeacher(HashMap<String,Teacher> teacherDetails ,Scanner sc) throws IOException {
 
-        // Create Teacher object
-        Teacher teacher = new Teacher(courseID, courseName);
+        System.out.print("Enter Teacher's Username: ");
+        this.uname = sc.nextLine();
+        System.out.print("Enter Teacher's Password: ");
+        this.password = sc.nextLine();
+
+        // username and password validation pending
+
+        System.out.print("Enter Teacher's Course ID: ");
+        this.courseID = sc.nextLine();
+        System.out.print("Enter Teacher's Course Name: ");
+        this.courseName = sc.nextLine();
+        System.out.print("Enter Passing Criteria (%): ");
+        this.passingCriteria = sc.nextInt();;
 
         // Input student details from student.txt file
         try {
-            File file = new File("students.txt");
-            Scanner fileScanner = new Scanner(file);
-            while (fileScanner.hasNextLine()) {
-                String line = fileScanner.nextLine();
-                String[] parts = line.split(",");
-                String studentId = parts[0].trim();
-                String studentName = parts[1].trim();
-                int studentAge = Integer.parseInt(parts[2].trim());
-               // Student student = new Student(studentId, studentName, studentAge);
-               // teacher.addStudent(student);
+            FileReader fileReader = new FileReader("students.txt");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;  // store line from file
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] words = line.split(",");  //Split the word using space
+                    String name = words[0];
+                    int rollNo = Integer.parseInt(words[1]);
+                    int marks = Integer.parseInt(words[2]);
+                    System.out.println(name +" "+ rollNo+ " " + marks);
+                // Student student = new Student(studentId, studentName, studentAge);
+                // teacher.addStudent(student);
             }
-            fileScanner.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Failed to read student.txt file. Please make sure the file exists.");
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -78,6 +87,18 @@ public class Teacher {
         for (Student student : studentList) {
             System.out.println(student.toString());
         }
+    }
+
+    public static void main(String[] args) {
+        Teacher t = new Teacher("IT629","oops");
+        HashMap<String,Teacher> map = new HashMap<>();
+        Scanner sc = new Scanner(System.in);
+        try {
+            t.registerTeacher(map,sc);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }
