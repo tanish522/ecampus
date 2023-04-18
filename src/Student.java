@@ -4,11 +4,12 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Student {
-    private double studId;
+    private int studId;
     private String name;
     private String password;
     private int attainedCredits;
     private int totalCredits;
+    private String courseID;
     private ArrayList<Course> courseList = new ArrayList<>();
     private int percentile;
     private String passFail;
@@ -16,9 +17,10 @@ public class Student {
     }
 
     //constructor to feed some static data for test purpose
-    Student(double studId, String name, int attainedCredits, int totalCredits, int percentile, String passFail) {
-        this.studId = 101;
+    Student(int studId, String name, String courseID, int attainedCredits, int totalCredits, int percentile, String passFail) {
+        this.studId = studId;
         this.name = name;
+        this.courseID = courseID;
         this.attainedCredits = attainedCredits;
         this.totalCredits = totalCredits;
         this.percentile = percentile;

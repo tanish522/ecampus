@@ -8,7 +8,7 @@ public class Teacher {
     private String uname;
     private String password;
     private int passingCriteria;
-    private HashMap<Double,Student> studentList = new HashMap<>();
+    private HashMap<Integer,Student> studentList = new HashMap<>();
 
 
     /*
@@ -57,15 +57,58 @@ public class Teacher {
             // while loop to read data from file and store it into local variables
             while ((line = bufferedReader.readLine()) != null) {
                 String[] words = line.split(",");  //Split the word using space
-                    double studID = Integer.parseInt(words[0]);
+                    int studID = Integer.parseInt(words[0]);
                     String name = words[1];
                     int attainedCredits = Integer.parseInt(words[2]);
                     int totalCredits = Integer.parseInt(words[3]);
                     int percentile = Integer.parseInt(words[4]);
                     String passFail = words[5];
-                    Student student = new Student(studID,name,attainedCredits,totalCredits,percentile,passFail);
+                    // creating student object for particular subject
+                    Student student = new Student(studID,name,courseID,attainedCredits,totalCredits,percentile,passFail);
                     studentList.put(studID,student);
             }
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // edit marks and grades
+    void editMarks(Scanner sc){
+        try {
+            File f1 = new File("students.txt");
+            FileReader fileReader = new FileReader(f1);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            System.out.println("Enter student id you want to edit: ");
+            String sID = sc.next();
+            String line;  // store line from file
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.contains(sID)) {
+                    String[] words = line.split(",");  //Split the word using space
+                    System.out.println(line);
+                    System.out.println("Enter column you want to edit starting from 0: ");
+                    int col = sc.nextInt();
+                    System.out.println("Enter new value : ");
+                    String newVal = sc.nextLine();
+                    String oldVal = words[col];
+                    line = line.replace(oldVal, newVal);  // replacing oldVal with newVal in string
+
+                    FileWriter fileWriter = new FileWriter(f1);
+                    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                    bufferedWriter.write(line + System.getProperty("line.separator"));  // writing string into file
+                }
+            }
+
+//            String currentLine;
+//            while((currentLine = reader.readLine()) != null) {
+//                currentLine = currentLine.replace(oldWord, newWord);
+//                writer.write(currentLine + System.getProperty("line.separator"));
+//            }
+//            reader.close();
+//            writer.close();
+//            inputFile.delete();
+//            tempFile.renameTo(inputFile);
         }
         catch (IOException e) {
             throw new RuntimeException(e);
@@ -84,11 +127,8 @@ public class Teacher {
         Teacher t = new Teacher();
         HashMap<String,Teacher> map = new HashMap<>();
         Scanner sc = new Scanner(System.in);
-        try {
-            t.registerTeacher(map,sc);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        //  t.registerTeacher(map,sc);
+        t.editMarks(sc);
 
     }
 

@@ -1,3 +1,1 @@
-// studId name attainedCredits totalCredits percentile pass/fail
-202212032,Tanish Patel,8,10,90,pass
-202212033,Pratish Soni,10,10,100,pass
+12,abc,1,1,1,passs
