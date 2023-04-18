@@ -4,23 +4,25 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Student {
-    private int studId;
+    private double studId;
     private String name;
     private String password;
+    private int attainedCredits;
+    private int totalCredits;
     private ArrayList<Course> courseList = new ArrayList<>();
-    private char overallGrade;
     private int percentile;
+    private String passFail;
     Student() {
     }
 
     //constructor to feed some static data for test purpose
-    Student(int studId, String name, String password, ArrayList courseList, char overallGrade, int percentile) {
+    Student(double studId, String name, int attainedCredits, int totalCredits, int percentile, String passFail) {
         this.studId = 101;
         this.name = name;
-        this.password = password;
-        this.courseList = courseList;
-        this.overallGrade =overallGrade;
+        this.attainedCredits = attainedCredits;
+        this.totalCredits = totalCredits;
         this.percentile = percentile;
+        this.passFail = passFail;
     }
     /*
     This loginUser function will take user list, studentid and password as arguments and
