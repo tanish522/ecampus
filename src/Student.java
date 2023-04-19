@@ -1,4 +1,7 @@
 import java.io.Console;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -31,20 +34,72 @@ public class Student {
     will check if the credentials entered are correct or not, if it is correct then it will
     return true else false if not correct.
     */
-    boolean loginstud(HashMap<String, Student> studDetails, String name, String password) {
+    boolean loginstud(String id, String password) throws FileNotFoundException {
 
-        if (studDetails.containsKey(name))
-        {
-            Student temp= studDetails.get(name);
-            System.out.println("\nWelcome " + name);
-            if(temp.password.equals(password))
-                return true;
-            else
-                return false;
+//        if (studDetails.containsKey(name))
+//        {
+//            Student temp= studDetails.get(name);
+//            System.out.println("\nWelcome " + name);
+//            if(temp.password.equals(password))
+//                return true;
+//            else
+//                return false;
+//        }
+//        else
+//        {
+//            return false;
+//        }
+        File myFile = new File("studentsMaster.txt");
+        String[] words = null;
+        try{
+            Scanner sc = new Scanner(myFile);
+            String line;
+            while(sc.hasNextLine())
+            {
+                line=sc.nextLine();
+                words= line.split(" ");
+                if(words[0].equals(id))
+                {
+                    if(words[1].equals(password))
+                    {
+                        return true;
+                    }
+                }
+
+            }
         }
-        else
+        catch(IOException e)
         {
-            return false;
+            System.out.println("Unable to open file");
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public void printScore(String id)
+    {
+        File myFile = new File("students.txt");
+        String[] words = null;
+        try{
+            Scanner sc = new Scanner(myFile);
+            String line;
+            while(sc.hasNextLine())
+            {
+                line=sc.nextLine();
+                words= line.split(",");
+                if(words[0].equals(id))
+                {
+                    for(String str : words)
+                    {
+                        System.out.println(str);
+                    }
+                }
+
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("Unable to open file");
+            e.printStackTrace();
         }
     }
     public void changePassword(Scanner sc){  //This will allow user to change his password.
