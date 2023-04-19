@@ -18,18 +18,34 @@ public class Teacher {
     will check if the credentials entered are correct or not, if it is correct then it will
     return true else false if not correct.
     */
-    public boolean loginUser(HashMap<String,Teacher> teacherDetails, String uname, String password) {
-    // pending - take teacher details from file of teacher rather than hashmap
-        if (teacherDetails.containsKey(uname))
-        {
-            Teacher temp= teacherDetails.get(uname);
-            System.out.println("\nWelcome " + uname);
-            return temp.password.equals(password);
+
+    boolean loginTeach(String id, String password) throws FileNotFoundException {
+
+        File myFile = new File("teachersMaster.txt");
+        String[] words = null;
+        try{
+            Scanner sc = new Scanner(myFile);
+            String line;
+            while(sc.hasNextLine())
+            {
+                line=sc.nextLine();
+                words= line.split(" ");
+                if(words[0].equals(id))
+                {
+                    if(words[1].equals(password))
+                    {
+                        return true;
+                    }
+                }
+
+            }
         }
-        else
+        catch(IOException e)
         {
-            return false;
+            System.out.println("Unable to open file");
+            e.printStackTrace();
         }
+        return false;
     }
 
     /*

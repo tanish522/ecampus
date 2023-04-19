@@ -69,7 +69,18 @@ public class Main {
                         ch2 = sc.nextInt();
                         switch (ch2){
                             case 1:{
-                                //Call Teacher Login Method
+                                System.out.print("\nEnter Username: ");
+                                String username = sc.next();
+                                String password = hiddenPassword();
+                                Teacher currteach = new Teacher();
+                                if(currteach.loginTeach(username,password))
+                                {
+                                    System.out.println("Login Successful");
+                                }
+                                else
+                                {
+                                    System.out.println("Login Failed");
+                                }
                                 break;
                             }
                             case 2:{
