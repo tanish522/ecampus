@@ -1,5 +1,7 @@
 import java.io.*;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Teacher {
@@ -33,7 +35,7 @@ public class Teacher {
     /*
     Register Teacher will take object of teachers details(hashmap) and register teacher and add it to the map
     */
-    public void registerTeacher(HashMap<String,Teacher> teacherDetails ,Scanner sc) throws IOException {
+    public void registerTeacher(HashMap<String,Teacher> teacherDetails ,Scanner sc) {
 
         System.out.print("Enter Teacher's Username: ");
         this.uname = sc.nextLine();
@@ -75,40 +77,25 @@ public class Teacher {
 
     // edit marks and grades
     void editMarks(Scanner sc){
+
         try {
-            File f1 = new File("students.txt");
-            FileReader fileReader = new FileReader(f1);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            FileOutputStream fs = new FileOutputStream("students.txt");
 
             System.out.println("Enter student id you want to edit: ");
-            String sID = sc.next();
-            String line;  // store line from file
-            while ((line = bufferedReader.readLine()) != null) {
-                if (line.contains(sID)) {
-                    String[] words = line.split(",");  //Split the word using space
-                    System.out.println(line);
-                    System.out.println("Enter column you want to edit starting from 0: ");
-                    int col = sc.nextInt();
-                    System.out.println("Enter new value : ");
-                    String newVal = sc.nextLine();
-                    String oldVal = words[col];
-                    line = line.replace(oldVal, newVal);  // replacing oldVal with newVal in string
+            int sID = sc.nextInt();
+            Student tempStud = studentList.get(sID);
+            String line = tempStud.getStudentString();
+            System.out.println(line);
+            String[] words = line.split(",");
+            tempStud.updateDetails();
+            Iterator<Student> cells = studentList.values().iterator();
+            while(cells.hasNext())
+            {
+                tempStud = cells.next();
+                line = tempStud.getStudentString();
+                fs.write((line+System.getProperty("line.separator")).getBytes());
 
-                    FileWriter fileWriter = new FileWriter(f1);
-                    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                    bufferedWriter.write(line + System.getProperty("line.separator"));  // writing string into file
-                }
             }
-
-//            String currentLine;
-//            while((currentLine = reader.readLine()) != null) {
-//                currentLine = currentLine.replace(oldWord, newWord);
-//                writer.write(currentLine + System.getProperty("line.separator"));
-//            }
-//            reader.close();
-//            writer.close();
-//            inputFile.delete();
-//            tempFile.renameTo(inputFile);
         }
         catch (IOException e) {
             throw new RuntimeException(e);
@@ -125,9 +112,9 @@ public class Teacher {
 
     public static void main(String[] args) {
         Teacher t = new Teacher();
-        HashMap<String,Teacher> map = new HashMap<>();
+        HashMap<String,Teacher> map = new HashMap<String,Teacher>();
         Scanner sc = new Scanner(System.in);
-        //  t.registerTeacher(map,sc);
+        t.registerTeacher(map,sc);
         t.editMarks(sc);
 
     }

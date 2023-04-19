@@ -61,6 +61,40 @@ public class Student {
         System.out.print("\nPassword changed successfully\n ");
     }
 
+    public String getStudentString(){
+        return this.studId+","+this.name+","+this.attainedCredits+","+this.totalCredits+","+this.percentile+","+this.passFail;
+    }
+
+    public void updateDetails(){
+        Scanner s = new Scanner(System.in);
+        System.out.println("Enter column you want to edit between 0 to 5: ");
+        int col = s.nextInt();
+        System.out.println("Enter new value : ");
+        String newVal = s.next();
+        switch (col){
+            case 0:
+                this.studId = Integer.parseInt(newVal);
+                break;
+            case 1:
+                this.name = newVal;
+                break;
+            case 2:
+                this.attainedCredits = Integer.parseInt(newVal);
+                break;
+            case 3:
+                this.totalCredits = Integer.parseInt(newVal);
+                break;
+            case 4:
+                this.percentile = Integer.parseInt(newVal);
+                break;
+            case 5:
+                this.passFail = newVal;
+                break;
+        }
+
+        s.close();
+    }
+
 }
 
 class Course{
