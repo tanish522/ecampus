@@ -1,9 +1,9 @@
 import java.io.Console;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws FileNotFoundException {
         Scanner sc=new Scanner(System.in);
         int ch;
 
@@ -21,37 +21,42 @@ public class Main {
                 {
                     // student login
                     int ch2;
-                    do{
-                        System.out.println("\n1. Login \n2. Register \n3. Forgot Password\n4.Exit");
+                        do{
+                            System.out.println("\n1. Login \n2. Forgot Password\n3.Exit");
 
-                        ch2 = sc.nextInt();
-                        switch (ch2){
-                            case 1:{
-                                System.out.print("\nEnter StudentId: ");
-                                String studId = sc.next();
-                                String password = hiddenPassword();
-                                Student currstud = new Student();
-                                break;
-                            }
-                            case 2: {
-                                //forgot password
-                            }
-                            case 3:{
-                                //Call Forgot Password
-                                break;
-                            }
-                            case 4:{
-                                System.out.println("Exiting");
+                            ch2 = sc.nextInt();
+                            switch (ch2){
+                                case 1:{
+                                    System.out.print("\nEnter StudentId: ");
+                                    String studId = sc.next();
+                                    String password = hiddenPassword();
+                                    Student currstud = new Student();
+                                    if(currstud.loginstud(studId,password))
+                                    {
+                                        System.out.println("Login Successful");
+                                        currstud.printScore(studId);
+                                    }
+                                    else
+                                    {
+                                        System.out.println("Login Failed");
+                                    }
+                                    break;
+                                }
+                                case 2:{
+                                    //Call Forgot Password
+                                    break;
+                                }
+                                case 3:{
+                                    System.out.println("Exiting");
+                                    break;
+                                }
+                                default:{
+                                    System.out.println("Invalid Choice! ");
+                                    break;
+                                }
 
-                                break;
                             }
-                            default:{
-                                System.out.println("Invalid Choice! ");
-                                break;
-                            }
-
-                        }
-                    }while(ch2!=3);
+                        }while(ch2!=3);
 
                     break;
                 }
@@ -64,7 +69,18 @@ public class Main {
                         ch2 = sc.nextInt();
                         switch (ch2){
                             case 1:{
-                                //Call Teacher Login Method
+                                System.out.print("\nEnter Username: ");
+                                String username = sc.next();
+                                String password = hiddenPassword();
+                                Teacher currteach = new Teacher();
+                                if(currteach.loginTeach(username,password))
+                                {
+                                    System.out.println("Login Successful");
+                                }
+                                else
+                                {
+                                    System.out.println("Login Failed");
+                                }
                                 break;
                             }
                             case 2:{
