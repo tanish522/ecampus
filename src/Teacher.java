@@ -34,7 +34,7 @@ public class Teacher {
     /*
     Register Teacher will take object of teachers details(hashmap) and register teacher and add it to the map
     */
-    public void registerTeacher(HashMap<String,Teacher> teacherDetails ,Scanner sc) {
+    public void registerTeacher(HashMap<String,Teacher> teacherDetails,Scanner sc) {
 
         System.out.print("Enter Teacher's Username: ");
         this.uname = sc.next();
@@ -166,7 +166,7 @@ public class Teacher {
         Student temp = new Student(202212032,"202212032","tanish","IT340",90,100,90,"AB");
         t.studentList.put(1,temp);
         writeToStudentDetails(t.studentList);  // write dummy stdent hashmap in file
-        t.registerTeacher(teacherList,sc);  // register teacher
+    //    t.registerTeacher(teacherList,sc);  // register teacher
 
         t.printStudent(t.studentList);  // print hashmap of student
      //   t.editMarks(sc);

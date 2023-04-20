@@ -25,16 +25,17 @@ public class Main {
                     int ch2;
                         do{
                             System.out.println("================== Student Login ==================");
-                            System.out.println("\n1. Login \n2. Forgot Password\n3.Exit");
+                            System.out.println("\n1. Login \n2. Forgot Password\n3. Exit");
 
                             ch2 = sc.nextInt();
                             switch (ch2){
                                 case 1:{
+
                                     System.out.print("\nEnter StudentId: ");
                                     String studId = sc.next();
                                     String password = hiddenPassword();
                                     Student currstud = new Student();
-                                    if(currstud.loginstud(studId,password))
+                                    if(currstud.loginstud(StudentData.AllStudentDetails,Integer.parseInt(studId),password,sc))
                                     {
                                         System.out.println("Login Successful");
                                         currstud.printScore(studId);
@@ -68,7 +69,7 @@ public class Main {
                     int ch2;
                     do{
                         System.out.println("================== Teacher Login ==================");
-                        System.out.println("\n1. Login \n2. Register \n3. Forgot Password\n4.Exit");
+                        System.out.println("\n1. Login \n2. Register \n3. Forgot Password\n4. Exit");
 
                         ch2 = sc.nextInt();
                         switch (ch2){
