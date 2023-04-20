@@ -23,6 +23,7 @@ public class Main {
                     // student login
                     int ch2;
                         do{
+                            System.out.println("================== Student Login ==================");
                             System.out.println("\n1. Login \n2. Forgot Password\n3.Exit");
 
                             ch2 = sc.nextInt();
@@ -65,6 +66,7 @@ public class Main {
                     // teacher login
                     int ch2;
                     do{
+                        System.out.println("================== Teacher Login ==================");
                         System.out.println("\n1. Login \n2. Register \n3. Forgot Password\n4.Exit");
 
                         ch2 = sc.nextInt();
@@ -82,12 +84,19 @@ public class Main {
                                 {
                                     System.out.println("Login Failed");
                                 }
+
+
+
+                                //After Login:
+                                System.out.println("\n1. Add Student \n2. Edit Marks \n3. View Students \n4. Delete Student" );
+
                                 break;
                             }
+
                             case 2:{
-                                Teacher t = new Teacher();
+                                Teacher newTeacher = new Teacher();
                                 HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
-                                t.registerTeacher(teacherList,sc);  // register teachers
+                                newTeacher.registerTeacher(teacherList,sc);  // register teachers
                                 break;
                             }
                             case 3:{
