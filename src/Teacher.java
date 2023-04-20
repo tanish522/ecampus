@@ -68,53 +68,98 @@ public class Teacher {
         this.passingCriteria = sc.nextInt();
 
         // Input student details from student.txt file
-        try {
-            FileReader fileReader = new FileReader("students.txt");
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String line;  // store line from file
-            // while loop to read data from file and store it into local variables
-            while ((line = bufferedReader.readLine()) != null) {
-                String[] words = line.split(",");  //Split the word using space
-                    int studID = Integer.parseInt(words[0]);
-                    String name = words[1];
-                    int attainedCredits = Integer.parseInt(words[2]);
-                    int totalCredits = Integer.parseInt(words[3]);
-                    int percentile = Integer.parseInt(words[4]);
-                    String passFail = words[5];
-                    // creating student object for particular subject
-                    Student student = new Student(studID,name,courseID,attainedCredits,totalCredits,percentile,passFail);
-                    studentList.put(studID,student);
-            }
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
+        this.studentList = readStudentsFile();
+    }
+
+    // edit marks then edit hashmap of studentlist and write that object to student.dat file
+    void editMarks(Scanner sc){
+
+        System.out.println("Enter student id you want to edit: ");
+        int sID = sc.nextInt();
+        Student tempStud = studentList.get(sID);
+        tempStud.printStudentDetails();
+        System.out.println("enter new marks : ");
+        int newMarks = sc.nextInt();
+        System.out.println("enter new grade : ");
+        int newGrade = sc.nextInt();
+        tempStud.setAttainedCredits(newMarks);
+        studentList.replace(sID,tempStud);
+        studentList.get(1).printStudentDetails();
+        writeToStudentDetails(studentList);
+    }
+
+    void addStudent(Scanner sc){
+        System.out.println("Enter student id: ");
+        int studId = sc.nextInt();  // duplicate id validation pending
+        System.out.println("Enter student name: ");
+        String name = sc.next();
+        System.out.println("Enter student courseID: ");
+        String courseID = sc.next();
+        System.out.println("Enter student attained credits: ");
+        int attainedCredits = sc.nextInt();
+        System.out.println("Enter student total credits: ");
+        int totalCredits = sc.nextInt();
+        System.out.println("Enter student percentile: ");
+        int percentile = sc.nextInt();
+        System.out.println("Enter student grade: ");
+        String grade = sc.next();
+        Student s = new Student(studId, name, courseID, attainedCredits, totalCredits, percentile, grade);
+        studentList.put(studId,s);
+        writeToStudentDetails(studentList);
+    }
+
+    void deleteStudent(Scanner sc){
+        System.out.println("Enter student id you want to delete: ");
+        int sID = sc.nextInt();
+        studentList.remove(sID);
+        writeToStudentDetails(studentList);
+    }
+
+    // make view student print format - pending
+    public void printStudent(HashMap<Integer,Student> studList){
+
+        for(Map.Entry<Integer,Student> ele : studList.entrySet()){
+            Student student = ele.getValue();
+            System.out.println(student.getStudentString());
         }
     }
 
-    // edit marks and grades
-    void editMarks(Scanner sc){
-
+    public static void writeToStudentDetails(HashMap<Integer,Student> studentList) {
         try {
-            FileOutputStream fs = new FileOutputStream("students.txt");
+            FileOutputStream fileOut = new FileOutputStream("student.dat");
+            ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
+            objOut.writeObject(studentList);
 
-            System.out.println("Enter student id you want to edit: ");
-            int sID = sc.nextInt();
-            Student tempStud = studentList.get(sID);
-            String line = tempStud.getStudentString();
-            System.out.println(line);
-            String[] words = line.split(",");
-            tempStud.updateDetails();
-            Iterator<Student> cells = studentList.values().iterator();
-            while(cells.hasNext())
-            {
-                tempStud = cells.next();
-                line = tempStud.getStudentString();
-                fs.write((line+System.getProperty("line.separator")).getBytes());
+            //close file output streams
+            objOut.close();
+            fileOut.close();
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+            System.out.println("File not found!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-            }
+    //return object of users from file
+    public static HashMap<Integer,Student> readStudentsFile(){
+        try{
+            FileInputStream fileInputStream = new FileInputStream("student.dat");
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            HashMap<Integer, Student> studList = (HashMap<Integer, Student>) objectInputStream.readObject();
+            return studList;
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+            System.out.println("File not found!");
+            return null;
+        }
+        catch (ClassNotFoundException e){
+            e.printStackTrace();
+            return null;
         }
         catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -128,11 +173,16 @@ public class Teacher {
 
     public static void main(String[] args) {
         Teacher t = new Teacher();
-        HashMap<String,Teacher> map = new HashMap<String,Teacher>();
+        HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
         Scanner sc = new Scanner(System.in);
-        t.registerTeacher(map,sc);
-        t.editMarks(sc);
+        // hashmap to feed dummy value in file
+        Student temp = new Student(1,"abc","asd",1,1,1,"pass");
+        t.studentList.put(1,temp);
+        writeToStudentDetails(t.studentList);  // write dummy stdent hashmap in file
+        t.registerTeacher(teacherList,sc);  // register teacher
 
+        t.printStudent(t.studentList);  // print hashmap of student
+        t.editMarks(sc);
     }
 
 }

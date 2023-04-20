@@ -1,12 +1,10 @@
-import java.io.Console;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
-public class Student {
+public class Student implements Serializable {
     private int studId;
     private String name;
     private String password;
@@ -15,20 +13,94 @@ public class Student {
     private String courseID;
     private ArrayList<Course> courseList = new ArrayList<>();
     private int percentile;
-    private String passFail;
+    private String grade;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getAttainedCredits() {
+        return attainedCredits;
+    }
+
+    public void setAttainedCredits(int attainedCredits) {
+        this.attainedCredits = attainedCredits;
+    }
+
+    public int getTotalCredits() {
+        return totalCredits;
+    }
+
+    public void setTotalCredits(int totalCredits) {
+        this.totalCredits = totalCredits;
+    }
+
+    public String getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(String courseID) {
+        this.courseID = courseID;
+    }
+
+    public ArrayList<Course> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(ArrayList<Course> courseList) {
+        this.courseList = courseList;
+    }
+
+    public int getPercentile() {
+        return percentile;
+    }
+
+    public void setPercentile(int percentile) {
+        this.percentile = percentile;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String Grade) {
+        this.grade = grade;
+    }
+
+    public int getStudId() {
+        return studId;
+    }
+
+    public void setStudId(int studId) {
+        this.studId = studId;
+    }
+
     Student() {
     }
 
     //constructor to feed some static data for test purpose
-    Student(int studId, String name, String courseID, int attainedCredits, int totalCredits, int percentile, String passFail) {
+    Student(int studId, String name, String courseID, int attainedCredits, int totalCredits, int percentile, String grade) {
         this.studId = studId;
         this.name = name;
         this.courseID = courseID;
         this.attainedCredits = attainedCredits;
         this.totalCredits = totalCredits;
         this.percentile = percentile;
-        this.passFail = passFail;
+        this.grade = grade;
     }
+
     /*
     This loginUser function will take user list, studentid and password as arguments and
     will check if the credentials entered are correct or not, if it is correct then it will
@@ -89,6 +161,10 @@ public class Student {
             e.printStackTrace();
         }
     }
+
+    public void printStudentDetails(){
+        System.out.println(this.studId + " " + this.name + " " + this.attainedCredits + " " + this.totalCredits );
+    }
     public void changePassword(Scanner sc){  //This will allow user to change his password.
         /*
          This block of code will hide the password to be displayed on the screen.
@@ -104,37 +180,7 @@ public class Student {
     }
 
     public String getStudentString(){
-        return this.studId+","+this.name+","+this.attainedCredits+","+this.totalCredits+","+this.percentile+","+this.passFail;
-    }
-
-    public void updateDetails(){
-        Scanner s = new Scanner(System.in);
-        System.out.println("Enter column you want to edit between 0 to 5: ");
-        int col = s.nextInt();
-        System.out.println("Enter new value : ");
-        String newVal = s.next();
-        switch (col){
-            case 0:
-                this.studId = Integer.parseInt(newVal);
-                break;
-            case 1:
-                this.name = newVal;
-                break;
-            case 2:
-                this.attainedCredits = Integer.parseInt(newVal);
-                break;
-            case 3:
-                this.totalCredits = Integer.parseInt(newVal);
-                break;
-            case 4:
-                this.percentile = Integer.parseInt(newVal);
-                break;
-            case 5:
-                this.passFail = newVal;
-                break;
-        }
-
-        s.close();
+        return this.studId+","+this.name+","+this.attainedCredits+","+this.totalCredits+","+this.percentile+","+this.grade;
     }
 
 }
