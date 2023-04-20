@@ -10,7 +10,7 @@ public class Teacher {
     private String uname;
     private String password;
     private int passingCriteria;
-    private HashMap<Integer,Student> studentList = new HashMap<>();
+    HashMap<Integer,Student> studentList = new HashMap<>();
 
 
     boolean loginTeacher(HashMap<String,Teacher> teacherDetails, String uname, String password) {
@@ -203,5 +203,4 @@ class TeachersList {
             return null;
         }
     }
-
 }

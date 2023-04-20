@@ -1,5 +1,6 @@
 import java.io.Console;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
@@ -84,8 +85,9 @@ public class Main {
                                 break;
                             }
                             case 2:{
-
-                                //Call Teacher Register method
+                                Teacher t = new Teacher();
+                                HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
+                                t.registerTeacher(teacherList,sc);  // register teachers
                                 break;
                             }
                             case 3:{
@@ -108,6 +110,9 @@ public class Main {
                     break;
                 }
                 case 3:{
+                    //Forgot Password
+                }
+                case 4:{
                     System.out.println("Exit");
                     break;
                 }
