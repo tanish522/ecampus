@@ -10,7 +10,7 @@ public class Teacher {
     private String uname;
     private String password;
     private int passingCriteria;
-    private HashMap<Integer,Student> studentList = new HashMap<>();
+    HashMap<Integer,Student> studentList = new HashMap<>();
 
 
     /*
@@ -171,7 +171,7 @@ public class Teacher {
         System.out.println("Student Details: ");
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Teacher t = new Teacher();
         HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
         Scanner sc = new Scanner(System.in);
@@ -183,6 +183,6 @@ public class Teacher {
 
         t.printStudent(t.studentList);  // print hashmap of student
         t.editMarks(sc);
-    }
+    }*/
 
 }
