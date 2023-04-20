@@ -13,40 +13,23 @@ public class Teacher {
     private HashMap<Integer,Student> studentList = new HashMap<>();
 
 
-    /*
-    This loginTeacher function will take teacher list, username and password as arguments and
-    will check if the credentials entered are correct or not, if it is correct then it will
-    return true else false if not correct.
-    */
+    boolean loginTeacher(HashMap<String,Teacher> teacherDetails, String uname, String password) {
 
-    boolean loginTeach(String id, String password) throws FileNotFoundException {
-
-        File myFile = new File("teachersMaster.txt");
-        String[] words = null;
-        try{
-            Scanner sc = new Scanner(myFile);
-            String line;
-            while(sc.hasNextLine())
-            {
-                line=sc.nextLine();
-                words= line.split(" ");
-                if(words[0].equals(id))
-                {
-                    if(words[1].equals(password))
-                    {
-                        return true;
-                    }
-                }
-
-            }
-        }
-        catch(IOException e)
+        if (teacherDetails.containsKey(uname))
         {
-            System.out.println("Unable to open file");
-            e.printStackTrace();
+            Teacher temp = teacherDetails.get(uname);
+            System.out.println("\nWelcome " + uname);
+            if(temp.password.equals(password))
+                return true;
+            else
+                return false;
         }
-        return false;
+        else
+        {
+            return false;
+        }
     }
+
 
     /*
     Register Teacher will take object of teachers details(hashmap) and register teacher and add it to the map
@@ -66,13 +49,11 @@ public class Teacher {
         this.courseName = sc.nextLine();
         System.out.print("Enter Passing Criteria of course(%): ");
         this.passingCriteria = sc.nextInt();
-
-        // Input student details from student.txt file
-        this.studentList = readStudentsFile();
+        this.studentList = readStudentsFile();  // Input student details from student.txt file
     }
 
     // edit marks then edit hashmap of studentlist and write that object to student.dat file
-    void editMarks(Scanner sc){
+    void editMarks(Scanner sc){  //done
 
         System.out.println("Enter student id you want to edit: ");
         int sID = sc.nextInt();
@@ -81,20 +62,20 @@ public class Teacher {
         System.out.println("enter new marks : ");
         int newMarks = sc.nextInt();
         System.out.println("enter new grade : ");
-        int newGrade = sc.nextInt();
+        String newGrade = sc.next();
         tempStud.setAttainedCredits(newMarks);
+        tempStud.setGrade(newGrade);
         studentList.replace(sID,tempStud);
         studentList.get(1).printStudentDetails();
         writeToStudentDetails(studentList);
     }
 
-    void addStudent(Scanner sc){
+    void addStudent(Scanner sc){  //done
         System.out.println("Enter student id: ");
         int studId = sc.nextInt();  // duplicate id validation pending
+        String password = String.valueOf(studId); // store default password for student
         System.out.println("Enter student name: ");
         String name = sc.next();
-        System.out.println("Enter student courseID: ");
-        String courseID = sc.next();
         System.out.println("Enter student attained credits: ");
         int attainedCredits = sc.nextInt();
         System.out.println("Enter student total credits: ");
@@ -103,12 +84,12 @@ public class Teacher {
         int percentile = sc.nextInt();
         System.out.println("Enter student grade: ");
         String grade = sc.next();
-        Student s = new Student(studId, name, courseID, attainedCredits, totalCredits, percentile, grade);
+        Student s = new Student(studId, password, name, courseID, attainedCredits, totalCredits, percentile, grade);
         studentList.put(studId,s);
         writeToStudentDetails(studentList);
     }
 
-    void deleteStudent(Scanner sc){
+    void deleteStudent(Scanner sc){  //done
         System.out.println("Enter student id you want to delete: ");
         int sID = sc.nextInt();
         studentList.remove(sID);
@@ -164,11 +145,17 @@ public class Teacher {
     }
 
     // Display course details
-    public void displayCourseDetails() {
+    public void displayCourseDetails(HashMap<Integer,Student> studList) {
         System.out.println("Course ID: " + courseID);
         System.out.println("Course Name: " + courseName);
         System.out.println("Passing Criteria: " + passingCriteria + "%");
-        System.out.println("Student Details: ");
+        System.out.println("Student Details under " + courseName + " : ");
+
+        for(Map.Entry<Integer,Student> ele : studList.entrySet()){
+            Student student = ele.getValue();
+            System.out.println(student.getName() + " " + student.getAttainedCredits() + " " + student.getTotalCredits() + " " + student.getGrade());
+        }
+
     }
 
     public static void main(String[] args) {
@@ -176,13 +163,45 @@ public class Teacher {
         HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
         Scanner sc = new Scanner(System.in);
         // hashmap to feed dummy value in file
-        Student temp = new Student(1,"abc","asd",1,1,1,"pass");
+        Student temp = new Student(202212032,"202212032","tanish","IT340",90,100,90,"AB");
         t.studentList.put(1,temp);
         writeToStudentDetails(t.studentList);  // write dummy stdent hashmap in file
         t.registerTeacher(teacherList,sc);  // register teacher
 
         t.printStudent(t.studentList);  // print hashmap of student
-        t.editMarks(sc);
+     //   t.editMarks(sc);
+    }
+
+}
+
+
+class TeachersList {
+    HashMap<String,Teacher> teachersList = new HashMap<String,Teacher>();
+
+    public Teacher getTeacher(String name)
+    {
+        return teachersList.get(name);
+    }
+
+    public static HashMap<String,Teacher> readTeachersFile(){
+        try{
+            FileInputStream fileInputStream = new FileInputStream("teacher.dat");
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            HashMap<String, Teacher> teacherList = (HashMap<String, Teacher>) objectInputStream.readObject();
+            return teacherList;
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+            System.out.println("File not found!");
+            return null;
+        }
+        catch (ClassNotFoundException e){
+            e.printStackTrace();
+            return null;
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

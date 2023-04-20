@@ -91,8 +91,9 @@ public class Student implements Serializable {
     }
 
     //constructor to feed some static data for test purpose
-    Student(int studId, String name, String courseID, int attainedCredits, int totalCredits, int percentile, String grade) {
+    Student(int studId, String password, String name, String courseID, int attainedCredits, int totalCredits, int percentile, String grade) {
         this.studId = studId;
+        this.password = password;
         this.name = name;
         this.courseID = courseID;
         this.attainedCredits = attainedCredits;
