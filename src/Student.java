@@ -1,8 +1,8 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
+import java.util.Formatter;
 
 public class Student implements Serializable {
     private int studId;
@@ -11,7 +11,6 @@ public class Student implements Serializable {
     private int attainedCredits;
     private int totalCredits;
     private String courseID;
-    private ArrayList<Course> courseList = new ArrayList<>();
     private int percentile;
     private String grade;
 
@@ -106,60 +105,56 @@ public class Student implements Serializable {
     will check if the credentials entered are correct or not, if it is correct then it will
     return true else false if not correct.
     */
-    boolean loginstud(String id, String password) throws FileNotFoundException {
-
-        File myFile = new File("studentsMaster.txt");
-        String[] words = null;
-        try{
-            Scanner sc = new Scanner(myFile);
-            String line;
-            while(sc.hasNextLine())
-            {
-                line=sc.nextLine();
-                words= line.split(" ");
-                if(words[0].equals(id))
-                {
-                    if(words[1].equals(password))
-                    {
-                        return true;
-                    }
-                }
-
-            }
-        }
-        catch(IOException e)
+    boolean loginstud(HashMap<Integer, Student> AllStudentDetails, int studId, String password, Scanner sc) throws FileNotFoundException {
+        if (AllStudentDetails.containsKey(studId))
         {
-            System.out.println("Unable to open file");
-            e.printStackTrace();
+            Student temp= AllStudentDetails.get(studId);
+            System.out.println("\nWelcome " + studId);
+            if(temp.password.equals(password))
+                return true;
+            else
+                return false;
         }
-        return false;
+        else
+        {
+            return false;
+        }
     }
     public void printScore(String id)
     {
         File myFile = new File("students.txt");
         String[] words = null;
-        try{
-            Scanner sc = new Scanner(myFile);
-            String line;
-            while(sc.hasNextLine())
-            {
-                line=sc.nextLine();
-                words= line.split(",");
-                if(words[0].equals(id))
-                {
-                    for(String str : words)
-                    {
-                        System.out.println(str);
-                    }
-                }
-
+//        try{
+//            Scanner sc = new Scanner(myFile);
+//            String line;
+//            while(sc.hasNextLine())
+//            {
+//                line=sc.nextLine();
+//                words= line.split(",");
+//                if(words[0].equals(id))
+//                {
+//                    for(String str : words)
+//                    {
+//                        System.out.println(str);
+//                    }
+//                }
+//
+//            }
+//        }
+            Formatter fmt = new Formatter();
+            fmt.format("\n%10s %15s %15s %12s %15s %15s %15", "Student Id", "Name", "Attained Credits", "Total Credits", "Percentile", "Result");
+            fmt.format("\n-------------------------------------------------------------------------------\n");
+            Student std = new Student();
+            for (int i = words.length - 1; i >= 0; i--) {
+                fmt.format("%10s", words[i]);
+                fmt.format("%15s", words[i]);
+                fmt.format("%15s", words[i]);
+                fmt.format("%15s", words[i]);
+                fmt.format("%15s", words[i]);
+                fmt.format("%15s", words[i]);
             }
-        }
-        catch(IOException e)
-        {
-            System.out.println("Unable to open file");
-            e.printStackTrace();
-        }
+            fmt.format("-------------------------------------------------------------------------------\n");
+            System.out.print(fmt);
     }
 
     public void printStudentDetails(){
@@ -182,7 +177,37 @@ public class Student implements Serializable {
     public String getStudentString(){
         return this.studId+","+this.name+","+this.attainedCredits+","+this.totalCredits+","+this.percentile+","+this.grade;
     }
+}
+class StudentData{
+    static HashMap<Integer, Student> AllStudentDetails = new HashMap<Integer, Student>();
+    public StudentData(){
+        AllStudentDetails = readStudentsFile();
 
+    }
+    public Student getStud(int id)
+    {
+        return AllStudentDetails.get(id);
+    }
+    public HashMap<Integer,Student> readStudentsFile(){
+        try{
+            FileInputStream fileInputStream = new FileInputStream("student.dat");
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            HashMap<Integer, Student> studList = (HashMap<Integer, Student>) objectInputStream.readObject();
+            return studList;
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+            System.out.println("File not found!");
+            return null;
+        }
+        catch (ClassNotFoundException e){
+            e.printStackTrace();
+            return null;
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
 
 class Course{

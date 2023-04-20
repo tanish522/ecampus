@@ -27,11 +27,12 @@ public class Main {
                             ch2 = sc.nextInt();
                             switch (ch2){
                                 case 1:{
+
                                     System.out.print("\nEnter StudentId: ");
                                     String studId = sc.next();
                                     String password = hiddenPassword();
                                     Student currstud = new Student();
-                                    if(currstud.loginstud(studId,password))
+                                    if(currstud.loginstud(StudentData.AllStudentDetails,Integer.parseInt(studId),password,sc))
                                     {
                                         System.out.println("Login Successful");
                                         currstud.printScore(studId);
@@ -73,7 +74,7 @@ public class Main {
                                 String username = sc.next();
                                 String password = hiddenPassword();
                                 Teacher currteach = new Teacher();
-                                if(currteach.loginTeach(username,password))
+                                if(currteach.loginTeach(username,password,sc))
                                 {
                                     System.out.println("Login Successful");
                                 }
