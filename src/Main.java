@@ -9,6 +9,9 @@ public class Main {
         int ch;
         HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
         HashMap<Integer,Student> studentList = new HashMap<>();
+        StudentData studList = new StudentData();
+        studentList = studList.AllStudentDetails;
+
         NewSession:
         //this do while loop will show the menu to the user to choose from student login, teacher login and exit
         do
@@ -32,10 +35,10 @@ public class Main {
                                 case 1:{
 
                                     System.out.print("\nEnter StudentId: ");
-                                    String studId = sc.next();
+                                    int studId = sc.nextInt();
                                     String password = hiddenPassword();
                                     Student currstud = new Student();
-                                    if(currstud.loginstud(StudentData.AllStudentDetails,Integer.parseInt(studId),password,sc))
+                                    if(currstud.loginStud(studentList,studId,password,sc))
                                     {
                                         System.out.println("Login Successful");
                                         currstud.printScore(studId);

@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Formatter;
@@ -98,7 +97,7 @@ public class Student implements Serializable {
     will check if the credentials entered are correct or not, if it is correct then it will
     return true else false if not correct.
     */
-    boolean loginstud(HashMap<Integer, Student> AllStudentDetails, int studId, String password, Scanner sc) throws FileNotFoundException {
+    boolean loginStud(HashMap<Integer, Student> AllStudentDetails, int studId, String password, Scanner sc) {
         if (AllStudentDetails.containsKey(studId))
         {
             Student temp= AllStudentDetails.get(studId);
@@ -117,7 +116,7 @@ public class Student implements Serializable {
 //        std2.loginstud(StudentData.AllStudentDetails,202212032,"202212032",sc);
 //
 //    }
-    public void printScore(String id)
+    public void printScore(int id)
     {
         File myFile = new File("students.txt");
         String[] words = null;
@@ -179,7 +178,6 @@ class StudentData{
     static HashMap<Integer, Student> AllStudentDetails = new HashMap<Integer, Student>();
     public StudentData(){
         AllStudentDetails = readStudentsFile();
-
     }
     public Student getStud(int id)
     {
