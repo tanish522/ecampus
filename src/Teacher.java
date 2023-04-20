@@ -37,16 +37,16 @@ public class Teacher {
     public void registerTeacher(HashMap<String,Teacher> teacherDetails,Scanner sc) {
 
         System.out.print("Enter Teacher's Username: ");
-        this.uname = sc.nextLine();
+        this.uname = sc.next();
         System.out.print("Enter Teacher's Password: ");
-        this.password = sc.nextLine();
+        this.password = sc.next();
 
         // username and password validation pending
 
         System.out.print("Enter Teacher's Course ID: ");
-        this.courseID = sc.nextLine();
+        this.courseID = sc.next();
         System.out.print("Enter Teacher's Course Name: ");
-        this.courseName = sc.nextLine();
+        this.courseName = sc.next();
         System.out.print("Enter Passing Criteria of course(%): ");
         this.passingCriteria = sc.nextInt();
         this.studentList = readStudentsFile();  // Input student details from student.txt file
