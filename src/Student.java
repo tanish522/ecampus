@@ -54,14 +54,6 @@ public class Student implements Serializable {
         this.courseID = courseID;
     }
 
-    public ArrayList<Course> getCourseList() {
-        return courseList;
-    }
-
-    public void setCourseList(ArrayList<Course> courseList) {
-        this.courseList = courseList;
-    }
-
     public int getPercentile() {
         return percentile;
     }
@@ -90,8 +82,9 @@ public class Student implements Serializable {
     }
 
     //constructor to feed some static data for test purpose
-    Student(int studId, String name, String courseID, int attainedCredits, int totalCredits, int percentile, String grade) {
+    Student(int studId, String password, String name, String courseID, int attainedCredits, int totalCredits, int percentile, String grade) {
         this.studId = studId;
+        this.password = password;
         this.name = name;
         this.courseID = courseID;
         this.attainedCredits = attainedCredits;
@@ -115,11 +108,15 @@ public class Student implements Serializable {
             else
                 return false;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
+//    public static void main(String[] args) throws FileNotFoundException {
+//        Scanner sc = new Scanner(System.in);
+//        StudentData std= new StudentData();
+//        Student std2 = new Student();
+//        std2.loginstud(StudentData.AllStudentDetails,202212032,"202212032",sc);
+//
+//    }
     public void printScore(String id)
     {
         File myFile = new File("students.txt");
@@ -175,7 +172,7 @@ public class Student implements Serializable {
     }
 
     public String getStudentString(){
-        return this.studId+","+this.name+","+this.attainedCredits+","+this.totalCredits+","+this.percentile+","+this.grade;
+        return this.studId+","+this.password+","+this.name+","+this.courseID+","+this.attainedCredits+","+this.totalCredits+","+this.percentile+","+this.grade;
     }
 }
 class StudentData{
