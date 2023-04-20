@@ -7,7 +7,8 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         Scanner sc=new Scanner(System.in);
         int ch;
-
+        HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
+        HashMap<Integer,Student> studentList = new HashMap<>();
         NewSession:
         //this do while loop will show the menu to the user to choose from student login, teacher login and exit
         do
@@ -74,28 +75,56 @@ public class Main {
                             case 1:{
                                 System.out.print("\nEnter Username: ");
                                 String username = sc.next();
+                                System.out.println("\nEnter Password: ");
                                 String password = hiddenPassword();
-                                Teacher currteach = new Teacher();
-                                if(currteach.loginTeach(username,password))
+                                Teacher currteacher = new Teacher();
+                                if(currteacher.loginTeacher(teacherList,username,password))
                                 {
                                     System.out.println("Login Successful");
+                                    int ch3;
+                                    do{
+                                        System.out.println("\n1. Add Student \n2. Edit Marks \n3. View Students \n4. Delete Student \n5. Logout" );
+                                        System.out.println("\nEnter Your Choice: ");
+                                        ch3 = sc.nextInt();
+                                        switch (ch3){
+                                            case 1:{
+                                                currteacher.addStudent(sc);
+                                                break;
+                                            }
+                                            case 2:{
+                                                currteacher.editMarks(sc);
+                                                break;
+                                            }
+                                            case 3:{
+                                                currteacher.printStudent(studentList);
+                                                break;
+                                            }
+                                            case 4:{
+                                                currteacher.deleteStudent(sc);
+                                                break;
+                                            }
+                                            case 5:{
+                                                System.out.println("Logout Successful");
+                                                break;
+                                            }
+                                            default:{
+
+                                                System.out.println("\nEnter Valid Choice! ");
+                                            }
+                                        }
+                                    }while(ch3!=5);
+
                                 }
                                 else
                                 {
                                     System.out.println("Login Failed");
                                 }
 
-
-
-                                //After Login:
-                                System.out.println("\n1. Add Student \n2. Edit Marks \n3. View Students \n4. Delete Student" );
-
                                 break;
                             }
 
                             case 2:{
                                 Teacher newTeacher = new Teacher();
-                                HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
                                 newTeacher.registerTeacher(teacherList,sc);  // register teachers
                                 break;
                             }
