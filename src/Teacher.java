@@ -4,16 +4,57 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Teacher {
+public class Teacher implements Serializable {
     private String courseID;
     private String courseName;
     private String uname;
     private String password;
     private int passingCriteria;
+
+    public String getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(String courseID) {
+        this.courseID = courseID;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getPassingCriteria() {
+        return passingCriteria;
+    }
+
+    public void setPassingCriteria(int passingCriteria) {
+        this.passingCriteria = passingCriteria;
+    }
+
     HashMap<Integer,Student> studentList = new HashMap<>();
 
     Teacher(){
-        
+
     }
 
     Teacher(String uname, String password, String courseID, String courseName, int passingCriteria ){

@@ -153,15 +153,7 @@ public class Student implements Serializable {
     }
 }
 class StudentData{
-    static HashMap<Integer, Student> AllStudentDetails = new HashMap<Integer, Student>();
-    public StudentData(){
-        AllStudentDetails = readStudentsFile();
-    }
-    public Student getStud(int id)
-    {
-        return AllStudentDetails.get(id);
-    }
-    public HashMap<Integer,Student> readStudentsFile(){
+    public static HashMap<Integer,Student> readStudentsFile(){
         try{
             FileInputStream fileInputStream = new FileInputStream("student.dat");
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
