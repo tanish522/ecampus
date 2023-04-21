@@ -4,16 +4,33 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
+    private static void init(){
+        HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
+        HashMap<Integer,Student> studentList = new HashMap<Integer,Student>();
+
+        Student s1 = new Student(1,"123","tanish","IT692",100,100,100,"A");
+        studentList.put(s1.getStudId(),s1);
+
+        Teacher.writeToStudentDetails(studentList);
+        Teacher.writeToTeacherDetails(teacherList);
+
+    }
     public static void main(String[] args) throws FileNotFoundException {
+
+        init();
+
         Scanner sc=new Scanner(System.in);
         int ch;
         HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
         HashMap<Integer,Student> studentList = new HashMap<>();
+        StudentData studList = new StudentData();
+        studentList = studList.AllStudentDetails;
+
         NewSession:
         //this do while loop will show the menu to the user to choose from student login, teacher login and exit
         do
         {
-            System.out.print("\n1. Student Login/register  \n2. Teacher Login/Register \n3. Exit");
+            System.out.print("\n1. Student Login/register  \n2. Teacher Login/Register \n3. Forgot Password \n4. Exit");
             System.out.print("\nEnter your choice: ");
             ch = sc.nextInt();
             //As soon as the user chooses, one of these options will be selected and executed accordingly
@@ -32,15 +49,13 @@ public class Main {
                                 case 1:{
 
                                     System.out.print("\nEnter StudentId: ");
-                                    String studId = sc.next();
-                                    System.out.println("\nEnter Password: ");
+                                    int studId = sc.nextInt();
                                     String password = hiddenPassword();
-                                    Teacher temp = new Teacher();
                                     Student currstud = new Student();
-                                    if(currstud.loginstud(temp.studentList,Integer.parseInt(studId),password,sc))
+                                    if(currstud.loginStud(studentList,studId,password,sc))
                                     {
                                         System.out.println("Login Successful");
-                                        currstud.printScore(studId);
+                                        currstud.printStudentDetails();
                                     }
                                     else
                                     {
@@ -49,7 +64,16 @@ public class Main {
                                     break;
                                 }
                                 case 2:{
-                                    //Call Forgot Password
+                                    System.out.println("\nEnter Student ID: ");
+                                    int studId = sc.nextInt();
+                                    if (studentList.containsKey(studId)){
+                                        Student currStudent = new Student();
+                                        currStudent.changePassword(studentList, studId, sc);
+                                    }
+                                    else{
+                                        System.out.println("\nStudent ID not available! ");
+                                    }
+
                                     break;
                                 }
                                 case 3:{
@@ -132,7 +156,8 @@ public class Main {
                                 break;
                             }
                             case 3:{
-
+                                Teacher currteacher = new Teacher();
+                                currteacher.changePassword(sc);
                                 //Call Forgot Password Method
 
                                 break;
@@ -151,7 +176,8 @@ public class Main {
                     break;
                 }
                 case 3:{
-                    //Forgot Password
+                    Teacher newTeacher = new Teacher();
+                    newTeacher.registerTeacher(teacherList,sc);
                 }
                 case 4:{
                     System.out.println("Exit");
@@ -170,12 +196,23 @@ public class Main {
          This block of code will hide the password that user is entering and won't show it on
          the screen, instead it will show '*' sign.
          */
+        char[] passw;
+        String password;
         Console c=System.console();
-        char[] passw = c.readPassword("Enter Password: ");
-        for(int i=0;i<passw.length;i++){
-            System.out.print("*");
+        if(c!=null){
+            passw = c.readPassword("Enter Password: ");
+            for(int i=0;i<passw.length;i++){
+                System.out.print("*");
+            }
+            String p = new String(passw);
+            return p;
         }
-        String p = new String(passw);
-        return p;
+        else{
+            Scanner scan = new Scanner(System.in);
+            System.out.print("Enter password: ");
+            password = scan.next();
+            return password;
+        }
+
     }
 }

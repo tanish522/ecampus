@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Formatter;
@@ -17,6 +16,7 @@ public class Student implements Serializable {
     public String getName() {
         return name;
     }
+
 
     public void setName(String name) {
         this.name = name;
@@ -98,7 +98,7 @@ public class Student implements Serializable {
     will check if the credentials entered are correct or not, if it is correct then it will
     return true else false if not correct.
     */
-    boolean loginstud(HashMap<Integer, Student> AllStudentDetails, int studId, String password, Scanner sc) throws FileNotFoundException {
+    boolean loginStud(HashMap<Integer, Student> AllStudentDetails, int studId, String password, Scanner sc) {
         if (AllStudentDetails.containsKey(studId))
         {
             Student temp= AllStudentDetails.get(studId);
@@ -110,34 +110,11 @@ public class Student implements Serializable {
         }
         return false;
     }
-//    public static void main(String[] args) throws FileNotFoundException {
-//        Scanner sc = new Scanner(System.in);
-//        StudentData std= new StudentData();
-//        Student std2 = new Student();
-//        std2.loginstud(StudentData.AllStudentDetails,202212032,"202212032",sc);
-//
-//    }
-    public void printScore(String id)
+
+    public void printScore(int id)
     {
         File myFile = new File("students.txt");
         String[] words = null;
-//        try{
-//            Scanner sc = new Scanner(myFile);
-//            String line;
-//            while(sc.hasNextLine())
-//            {
-//                line=sc.nextLine();
-//                words= line.split(",");
-//                if(words[0].equals(id))
-//                {
-//                    for(String str : words)
-//                    {
-//                        System.out.println(str);
-//                    }
-//                }
-//
-//            }
-//        }
             Formatter fmt = new Formatter();
             fmt.format("\n%10s %15s %15s %12s %15s %15s %15", "Student Id", "Name", "Attained Credits", "Total Credits", "Percentile", "Result");
             fmt.format("\n-------------------------------------------------------------------------------\n");
@@ -157,17 +134,18 @@ public class Student implements Serializable {
     public void printStudentDetails(){
         System.out.println(this.studId + " " + this.name + " " + this.attainedCredits + " " + this.totalCredits );
     }
-    public void changePassword(Scanner sc){  //This will allow user to change his password.
+    public void changePassword(HashMap<Integer, Student> AllStudentDetails, int studId, Scanner sc){  //This will allow user to change his password.
         /*
          This block of code will hide the password to be displayed on the screen.
         */
+        Student temp= AllStudentDetails.get(studId);
         Console c=System.console();
         char[] passw = c.readPassword("\nEnter Password: ");
         for(int i=0;i<passw.length;i++){
             System.out.print("*");
         }
         String p = new String(passw);
-        this.password = p;
+        temp.password = p;
         System.out.print("\nPassword changed successfully\n ");
     }
 
@@ -179,7 +157,6 @@ class StudentData{
     static HashMap<Integer, Student> AllStudentDetails = new HashMap<Integer, Student>();
     public StudentData(){
         AllStudentDetails = readStudentsFile();
-
     }
     public Student getStud(int id)
     {
@@ -205,8 +182,8 @@ class StudentData{
             return null;
         }
     }
-}
 
+}
 class Course{
     private String courseName;
     private int totalCredit;
