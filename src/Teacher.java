@@ -4,13 +4,66 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Teacher {
+public class Teacher implements Serializable {
     private String courseID;
     private String courseName;
     private String uname;
     private String password;
     private int passingCriteria;
+
+    public String getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(String courseID) {
+        this.courseID = courseID;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getPassingCriteria() {
+        return passingCriteria;
+    }
+
+    public void setPassingCriteria(int passingCriteria) {
+        this.passingCriteria = passingCriteria;
+    }
+
     HashMap<Integer,Student> studentList = new HashMap<>();
+
+    Teacher(){
+
+    }
+
+    Teacher(String uname, String password, String courseID, String courseName, int passingCriteria ){
+        this.uname = uname;
+        this.password = password;
+        this.courseID = courseID;
+        this.courseName = courseName;
+        this.passingCriteria = passingCriteria;
+    }
 
 
         boolean loginTeacher(HashMap<String,Teacher> teacherDetails, String uname, String password) {
@@ -50,8 +103,13 @@ public class Teacher {
 
         System.out.print("Enter Teacher's Username: ");
         this.uname = sc.next();
-        this.password = hiddenPassword();
-        System.out.print("\nEnter Teacher's Course ID: ");
+        while(teacherDetails.containsKey(uname)){
+            System.out.println("Username already exists. Enter another username : ");
+            this.uname = sc.next();
+        }
+        System.out.print("Enter Teacher's Password: ");
+        this.password = sc.next();
+        System.out.print("Enter Teacher's Course ID: ");
         this.courseID = sc.next();
         System.out.print("Enter Teacher's Course Name: ");
         this.courseName = sc.next();
@@ -79,6 +137,9 @@ public class Teacher {
         System.out.println("Enter student id you want to edit: ");
         int sID = sc.nextInt();
         Student tempStud = studentList.get(sID);
+        if(tempStud.getCourseID().equals(this.courseID)){
+            System.out.println("You cannot edit marks. Student ID does not belong to your course!");
+        }
         tempStud.printStudentDetails();
         System.out.println("enter new marks : ");
         int newMarks = sc.nextInt();
@@ -93,7 +154,11 @@ public class Teacher {
 
     void addStudent(Scanner sc){  //done
         System.out.println("Enter student id: ");
-        int studId = sc.nextInt();  // duplicate id validation pending
+        int studId = sc.nextInt();
+        while (studentList.containsKey(studId)){
+            System.out.println("Student ID already exists. Enter new student ID : ");
+            studId = sc.nextInt();
+        }
         String password = String.valueOf(studId); // store default password for student
         System.out.println("Enter student name: ");
         String name = sc.next();
@@ -113,16 +178,20 @@ public class Teacher {
     void deleteStudent(Scanner sc){  //done
         System.out.println("Enter student id you want to delete: ");
         int sID = sc.nextInt();
+        Student tempStud = studentList.get(sID);
+        if(tempStud.getCourseID().equals(this.courseID)){
+            System.out.println("You delete this student. Student ID does not belong to your course!");
+        }
         studentList.remove(sID);
         writeToStudentDetails(studentList);
     }
 
-    // make view student print format - pending
     public void printStudent(HashMap<Integer,Student> studList){
 
         for(Map.Entry<Integer,Student> ele : studList.entrySet()){
             Student student = ele.getValue();
-            System.out.println(student.getStudentString());
+            if(student.getCourseID().equals(this.courseID))
+                student.printStudentDetails();
         }
     }
 
@@ -138,7 +207,7 @@ public class Teacher {
             System.out.println("File not found!");
         } catch (IOException e){
             e.printStackTrace();
-            System.out.println("Io excextion!");
+            System.out.println("Io exception!");
         }
     }
 

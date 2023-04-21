@@ -1,6 +1,7 @@
 import java.io.Console;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -8,6 +9,8 @@ public class Main {
         HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
         HashMap<Integer,Student> studentList = new HashMap<Integer,Student>();
 
+        Teacher t = new Teacher("amit123","amit123","IT230","data structure",70);
+        teacherList.put(t.getUname(),t);
         Student s1 = new Student(1,"123","tanish","IT692",100,100,100,"A");
         studentList.put(s1.getStudId(),s1);
 
@@ -21,10 +24,8 @@ public class Main {
 
         Scanner sc=new Scanner(System.in);
         int ch;
-        HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
-        HashMap<Integer,Student> studentList = new HashMap<>();
-        StudentData studList = new StudentData();
-        studentList = studList.AllStudentDetails;
+        HashMap<String,Teacher> teacherList = TeachersList.readTeachersFile();
+        HashMap<Integer,Student> studentList = StudentData.readStudentsFile();
 
         NewSession:
         //this do while loop will show the menu to the user to choose from student login, teacher login and exit
@@ -100,9 +101,9 @@ public class Main {
                         ch2 = sc.nextInt();
                         switch (ch2){
                             case 1:{
+
                                 System.out.print("\nEnter Username: ");
                                 String username = sc.next();
-                                System.out.println("\nEnter Password: ");
                                 String password = hiddenPassword();
                                 Teacher currteacher = new Teacher();
                                 if(currteacher.loginTeacher(teacherList,username,password))
@@ -200,6 +201,7 @@ public class Main {
         String password;
         Console c=System.console();
         if(c!=null){
+            System.out.println(1);
             passw = c.readPassword("Enter Password: ");
             for(int i=0;i<passw.length;i++){
                 System.out.print("*");
