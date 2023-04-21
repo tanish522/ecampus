@@ -30,6 +30,18 @@ public class Teacher {
         }
     }
 
+    public void changePassword(Scanner sc){  //This will allow user to change his password.
+
+        Console c=System.console();
+        char[] passw = c.readPassword("\nEnter Password: ");
+        for(int i=0;i<passw.length;i++){
+            System.out.print("*");
+        }
+        String p = new String(passw);
+        this.password = p;
+        System.out.print("\nPassword changed successfully\n ");
+    }
+
 
     /*
     Register Teacher will take object of teachers details(hashmap) and register teacher and add it to the map
@@ -105,6 +117,22 @@ public class Teacher {
         }
     }
 
+    public static void writeToTeacherDetails(HashMap<String,Teacher> teacherList){
+        try{
+            FileOutputStream fileOut = new FileOutputStream("teacher.dat");
+            ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
+            //write into file
+            objOut.writeObject(teacherList);
+
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+            System.out.println("File not found!");
+        } catch (IOException e){
+            e.printStackTrace();
+            System.out.println("Io excextion!");
+        }
+    }
+
     public static void writeToStudentDetails(HashMap<Integer,Student> studentList) {
         try {
             FileOutputStream fileOut = new FileOutputStream("student.dat");
@@ -156,20 +184,6 @@ public class Teacher {
             System.out.println(student.getName() + " " + student.getAttainedCredits() + " " + student.getTotalCredits() + " " + student.getGrade());
         }
 
-    }
-
-    public static void main(String[] args) {
-        Teacher t = new Teacher();
-        HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
-        Scanner sc = new Scanner(System.in);
-        // hashmap to feed dummy value in file
-        Student temp = new Student(202212032,"202212032","tanish","IT340",90,100,90,"AB");
-        t.studentList.put(1,temp);
-        writeToStudentDetails(t.studentList);  // write dummy stdent hashmap in file
-    //    t.registerTeacher(teacherList,sc);  // register teacher
-
-        t.printStudent(t.studentList);  // print hashmap of student
-     //   t.editMarks(sc);
     }
 
 }

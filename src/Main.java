@@ -4,7 +4,21 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
+    private static void init(){
+        HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
+        HashMap<Integer,Student> studentList = new HashMap<Integer,Student>();
+
+        Student s1 = new Student(1,"123","tanish","IT692",100,100,100,"A");
+        studentList.put(s1.getStudId(),s1);
+
+        Teacher.writeToStudentDetails(studentList);
+        Teacher.writeToTeacherDetails(teacherList);
+
+    }
     public static void main(String[] args) throws FileNotFoundException {
+
+        init();
+
         Scanner sc=new Scanner(System.in);
         int ch;
         HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
@@ -50,7 +64,9 @@ public class Main {
                                     break;
                                 }
                                 case 2:{
-                                    //Call Forgot Password
+
+                                    Student currStudent = new Student();
+                                    currStudent.changePassword(sc);
                                     break;
                                 }
                                 case 3:{
@@ -133,7 +149,8 @@ public class Main {
                                 break;
                             }
                             case 3:{
-
+                                Teacher currteacher = new Teacher();
+                                currteacher.changePassword(sc);
                                 //Call Forgot Password Method
 
                                 break;
@@ -152,7 +169,8 @@ public class Main {
                     break;
                 }
                 case 3:{
-                    //Forgot Password
+                    Teacher newTeacher = new Teacher();
+                    newTeacher.registerTeacher(teacherList,sc);
                 }
                 case 4:{
                     System.out.println("Exit");
@@ -171,12 +189,23 @@ public class Main {
          This block of code will hide the password that user is entering and won't show it on
          the screen, instead it will show '*' sign.
          */
+        char[] passw;
+        String password;
         Console c=System.console();
-        char[] passw = c.readPassword("Enter Password: ");
-        for(int i=0;i<passw.length;i++){
-            System.out.print("*");
+        if(c!=null){
+            passw = c.readPassword("Enter Password: ");
+            for(int i=0;i<passw.length;i++){
+                System.out.print("*");
+            }
+            String p = new String(passw);
+            return p;
         }
-        String p = new String(passw);
-        return p;
+        else{
+            Scanner scan = new Scanner(System.in);
+            System.out.print("Enter password: ");
+            password = scan.next();
+            return password;
+        }
+
     }
 }

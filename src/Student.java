@@ -17,6 +17,7 @@ public class Student implements Serializable {
         return name;
     }
 
+
     public void setName(String name) {
         this.name = name;
     }
@@ -109,34 +110,11 @@ public class Student implements Serializable {
         }
         return false;
     }
-//    public static void main(String[] args) throws FileNotFoundException {
-//        Scanner sc = new Scanner(System.in);
-//        StudentData std= new StudentData();
-//        Student std2 = new Student();
-//        std2.loginstud(StudentData.AllStudentDetails,202212032,"202212032",sc);
-//
-//    }
+
     public void printScore(int id)
     {
         File myFile = new File("students.txt");
         String[] words = null;
-//        try{
-//            Scanner sc = new Scanner(myFile);
-//            String line;
-//            while(sc.hasNextLine())
-//            {
-//                line=sc.nextLine();
-//                words= line.split(",");
-//                if(words[0].equals(id))
-//                {
-//                    for(String str : words)
-//                    {
-//                        System.out.println(str);
-//                    }
-//                }
-//
-//            }
-//        }
             Formatter fmt = new Formatter();
             fmt.format("\n%10s %15s %15s %12s %15s %15s %15", "Student Id", "Name", "Attained Credits", "Total Credits", "Percentile", "Result");
             fmt.format("\n-------------------------------------------------------------------------------\n");
@@ -203,8 +181,8 @@ class StudentData{
             return null;
         }
     }
-}
 
+}
 class Course{
     private String courseName;
     private int totalCredit;
