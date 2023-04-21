@@ -8,6 +8,7 @@ public class Main {
         HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
         HashMap<Integer,Student> studentList = new HashMap<Integer,Student>();
 
+        Teacher t = new Teacher("amit123","amit123","IT230","data structure",70);
         Student s1 = new Student(1,"123","tanish","IT692",100,100,100,"A");
         studentList.put(s1.getStudId(),s1);
 
