@@ -33,9 +33,11 @@ public class Main {
 
                                     System.out.print("\nEnter StudentId: ");
                                     String studId = sc.next();
+                                    System.out.println("\nEnter Password: ");
                                     String password = hiddenPassword();
+                                    Teacher temp = new Teacher();
                                     Student currstud = new Student();
-                                    if(currstud.loginstud(StudentData.AllStudentDetails,Integer.parseInt(studId),password,sc))
+                                    if(currstud.loginstud(temp.studentList,Integer.parseInt(studId),password,sc))
                                     {
                                         System.out.println("Login Successful");
                                         currstud.printScore(studId);

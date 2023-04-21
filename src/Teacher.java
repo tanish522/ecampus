@@ -13,7 +13,7 @@ public class Teacher {
     HashMap<Integer,Student> studentList = new HashMap<>();
 
 
-    boolean loginTeacher(HashMap<String,Teacher> teacherDetails, String uname, String password) {
+        boolean loginTeacher(HashMap<String,Teacher> teacherDetails, String uname, String password) {
 
         if (teacherDetails.containsKey(uname))
         {
@@ -38,12 +38,8 @@ public class Teacher {
 
         System.out.print("Enter Teacher's Username: ");
         this.uname = sc.next();
-        System.out.print("Enter Teacher's Password: ");
-        this.password = sc.next();
-
-        // username and password validation pending
-
-        System.out.print("Enter Teacher's Course ID: ");
+        this.password = hiddenPassword();
+        System.out.print("\nEnter Teacher's Course ID: ");
         this.courseID = sc.next();
         System.out.print("Enter Teacher's Course Name: ");
         this.courseName = sc.next();
@@ -51,7 +47,20 @@ public class Teacher {
         this.passingCriteria = sc.nextInt();
         this.studentList = readStudentsFile();  // Input student details from student.txt file
     }
-
+    public  static String hiddenPassword(){
+         /*
+         This block of code will hide the password that user is entering and won't show it on
+         the screen, instead it will show '*' sign.
+         */
+        Console c=System.console();
+        char[] passw = c.readPassword("Enter Password: ");
+        for(int i=0;i<passw.length;i++){
+            System.out.print("*");
+        }
+        System.out.println();
+        String p = new String(passw);
+        return p;
+    }
     // edit marks then edit hashmap of studentlist and write that object to student.dat file
     void editMarks(Scanner sc){  //done
 
@@ -157,21 +166,6 @@ public class Teacher {
         }
 
     }
-
-    public static void main(String[] args) {
-        Teacher t = new Teacher();
-        HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
-        Scanner sc = new Scanner(System.in);
-        // hashmap to feed dummy value in file
-        Student temp = new Student(202212032,"202212032","tanish","IT340",90,100,90,"AB");
-        t.studentList.put(1,temp);
-        writeToStudentDetails(t.studentList);  // write dummy stdent hashmap in file
-    //    t.registerTeacher(teacherList,sc);  // register teacher
-
-        t.printStudent(t.studentList);  // print hashmap of student
-     //   t.editMarks(sc);
-    }
-
 }
 
 
