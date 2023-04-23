@@ -55,6 +55,7 @@ public class Main {
                                     Student currstud = new Student();
                                     if(currstud.loginStud(studentList,studId,password,sc))
                                     {
+                                        currstud = studentList.get(studId);
                                         System.out.println("Login Successful");
                                         currstud.printStudentDetails();
                                     }
@@ -117,6 +118,7 @@ public class Main {
                                         switch (ch3){
                                             case 1:{
                                                 currteacher.addStudent(sc);
+                                                studentList = StudentData.readStudentsFile();
                                                 break;
                                             }
                                             case 2:{
@@ -154,11 +156,14 @@ public class Main {
                             case 2:{
                                 Teacher newTeacher = new Teacher();
                                 newTeacher.registerTeacher(teacherList,sc);  // register teachers
+                                teacherList.put(newTeacher.getUname(), newTeacher);
                                 break;
                             }
                             case 3:{
                                 Teacher currteacher = new Teacher();
-                                currteacher.changePassword(sc);
+                                System.out.println("\nEnter Username: ");
+                                String uname = sc.next();
+                                currteacher.changePassword(teacherList, uname, sc);
                                 //Call Forgot Password Method
 
                                 break;
@@ -173,7 +178,7 @@ public class Main {
                             }
 
                         }
-                    }while(ch2!=3);
+                    }while(ch2!=4);
                     break;
                 }
                 case 3:{

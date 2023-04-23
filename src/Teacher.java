@@ -83,16 +83,23 @@ public class Teacher implements Serializable {
         }
     }
 
-    public void changePassword(Scanner sc){  //This will allow user to change his password.
+    public void changePassword(HashMap<String,Teacher> teacherDetails, String uname, Scanner sc){  //This will allow user to change his password.
 
-        Console c=System.console();
-        char[] passw = c.readPassword("\nEnter Password: ");
-        for(int i=0;i<passw.length;i++){
-            System.out.print("*");
+        if(teacherDetails.containsKey(uname)){
+            Teacher temp = teacherDetails.get(uname);
+            Console c=System.console();
+            char[] passw = c.readPassword("\nEnter Password: ");
+            for(int i=0;i<passw.length;i++){
+                System.out.print("*");
+            }
+            String p = new String(passw);
+            temp.password = p;
+            System.out.print("\nPassword changed successfully\n ");
         }
-        String p = new String(passw);
-        this.password = p;
-        System.out.print("\nPassword changed successfully\n ");
+        else{
+            System.out.println("\nTeacher not available");
+        }
+
     }
 
 
@@ -104,7 +111,7 @@ public class Teacher implements Serializable {
         System.out.print("Enter Teacher's Username: ");
         this.uname = sc.next();
         while(teacherDetails.containsKey(uname)){
-            System.out.println("Username already exists. Enter another username : ");
+            System.out.println("Username already exists. \nEnter another username : ");
             this.uname = sc.next();
         }
         System.out.print("Enter Teacher's Password: ");
@@ -116,6 +123,7 @@ public class Teacher implements Serializable {
         System.out.print("Enter Passing Criteria of course(%): ");
         this.passingCriteria = sc.nextInt();
         this.studentList = readStudentsFile();  // Input student details from student.txt file
+
     }
     public  static String hiddenPassword(){
          /*
