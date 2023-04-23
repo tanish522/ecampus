@@ -137,19 +137,21 @@ public class Teacher implements Serializable {
         System.out.println("Enter student id you want to edit: ");
         int sID = sc.nextInt();
         Student tempStud = studentList.get(sID);
-        if(tempStud.getCourseID().equals(this.courseID)){
+        if(!tempStud.getCourseID().equals(this.courseID)){
             System.out.println("You cannot edit marks. Student ID does not belong to your course!");
         }
-        tempStud.printStudentDetails();
-        System.out.println("enter new marks : ");
-        int newMarks = sc.nextInt();
-        System.out.println("enter new grade : ");
-        String newGrade = sc.next();
-        tempStud.setAttainedCredits(newMarks);
-        tempStud.setGrade(newGrade);
-        studentList.replace(sID,tempStud);
-        studentList.get(1).printStudentDetails();
-        writeToStudentDetails(studentList);
+        else {
+            tempStud.printStudentDetails();
+            System.out.println("enter new marks : ");
+            int newMarks = sc.nextInt();
+            System.out.println("enter new grade : ");
+            String newGrade = sc.next();
+            tempStud.setAttainedCredits(newMarks);
+            tempStud.setGrade(newGrade);
+            studentList.replace(sID, tempStud);
+            studentList.get(sID).printStudentDetails();
+            writeToStudentDetails(studentList);
+        }
     }
 
     void addStudent(Scanner sc){  //done
@@ -170,7 +172,7 @@ public class Teacher implements Serializable {
         int percentile = sc.nextInt();
         System.out.println("Enter student grade: ");
         String grade = sc.next();
-        Student s = new Student(studId, password, name, courseID, attainedCredits, totalCredits, percentile, grade);
+        Student s = new Student(studId, password, name, this.courseID, attainedCredits, totalCredits, percentile, grade);
         studentList.put(studId,s);
         writeToStudentDetails(studentList);
     }
@@ -179,11 +181,13 @@ public class Teacher implements Serializable {
         System.out.println("Enter student id you want to delete: ");
         int sID = sc.nextInt();
         Student tempStud = studentList.get(sID);
-        if(tempStud.getCourseID().equals(this.courseID)){
-            System.out.println("You delete this student. Student ID does not belong to your course!");
+        if(!tempStud.getCourseID().equals(this.courseID)){
+            System.out.println("You cannot delete this student. Student ID does not belong to your course!");
         }
-        studentList.remove(sID);
-        writeToStudentDetails(studentList);
+        else{
+            studentList.remove(sID);
+            writeToStudentDetails(studentList);
+        }
     }
 
     public void printStudent(HashMap<Integer,Student> studList){

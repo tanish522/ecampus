@@ -25,7 +25,7 @@ public class Main {
         Scanner sc=new Scanner(System.in);
         int ch;
         HashMap<String,Teacher> teacherList = TeachersList.readTeachersFile();
-        HashMap<Integer,Student> studentList = StudentData.readStudentsFile();
+        HashMap<Integer,Student> studentList = Student.readStudentsFile();
 
         NewSession:
         //this do while loop will show the menu to the user to choose from student login, teacher login and exit
@@ -109,6 +109,8 @@ public class Main {
                                 if(currteacher.loginTeacher(teacherList,username,password))
                                 {
                                     System.out.println("Login Successful");
+                                    currteacher = teacherList.get(username);
+                                    System.out.println("currteacher "+ currteacher);
                                     int ch3;
                                     do{
                                         System.out.println("\n1. Add Student \n2. Edit Marks \n3. View Students \n4. Delete Student \n5. Logout" );
@@ -140,6 +142,7 @@ public class Main {
                                                 System.out.println("\nEnter Valid Choice! ");
                                             }
                                         }
+                                        studentList = Student.readStudentsFile();
                                     }while(ch3!=5);
 
                                 }
@@ -173,7 +176,7 @@ public class Main {
                             }
 
                         }
-                    }while(ch2!=3);
+                    }while(ch2!=4);
                     break;
                 }
                 case 3:{
@@ -201,7 +204,6 @@ public class Main {
         String password;
         Console c=System.console();
         if(c!=null){
-            System.out.println(1);
             passw = c.readPassword("Enter Password: ");
             for(int i=0;i<passw.length;i++){
                 System.out.print("*");

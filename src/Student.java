@@ -66,7 +66,7 @@ public class Student implements Serializable {
         return grade;
     }
 
-    public void setGrade(String Grade) {
+    public void setGrade(String grade) {
         this.grade = grade;
     }
 
@@ -111,28 +111,10 @@ public class Student implements Serializable {
         return false;
     }
 
-    public void printScore(int id)
-    {
-        File myFile = new File("students.txt");
-        String[] words = null;
-            Formatter fmt = new Formatter();
-            fmt.format("\n%10s %15s %15s %12s %15s %15s %15", "Student Id", "Name", "Attained Credits", "Total Credits", "Percentile", "Result");
-            fmt.format("\n-------------------------------------------------------------------------------\n");
-            Student std = new Student();
-            for (int i = words.length - 1; i >= 0; i--) {
-                fmt.format("%10s", words[i]);
-                fmt.format("%15s", words[i]);
-                fmt.format("%15s", words[i]);
-                fmt.format("%15s", words[i]);
-                fmt.format("%15s", words[i]);
-                fmt.format("%15s", words[i]);
-            }
-            fmt.format("-------------------------------------------------------------------------------\n");
-            System.out.print(fmt);
-    }
-
     public void printStudentDetails(){
-        System.out.println(this.studId + " " + this.name + " " + this.attainedCredits + " " + this.totalCredits );
+
+        System.out.println("studId" + "\t" + "name" + "\t" + "attainedCredits" + "\t" + "totalCredits" + "\t" + "grade");
+        System.out.println(getStudId() + "\t" + getName() + "\t" + getAttainedCredits() + "\t\t" + getTotalCredits() + "\t\t" + getGrade());
     }
     public void changePassword(HashMap<Integer, Student> AllStudentDetails, int studId, Scanner sc){  //This will allow user to change his password.
         /*
@@ -152,8 +134,7 @@ public class Student implements Serializable {
     public String getStudentString(){
         return this.studId+","+this.password+","+this.name+","+this.courseID+","+this.attainedCredits+","+this.totalCredits+","+this.percentile+","+this.grade;
     }
-}
-class StudentData{
+
     public static HashMap<Integer,Student> readStudentsFile(){
         try{
             FileInputStream fileInputStream = new FileInputStream("student.dat");
@@ -174,7 +155,6 @@ class StudentData{
             return null;
         }
     }
-
 }
 class Course{
     private String courseName;
