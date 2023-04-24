@@ -1,7 +1,5 @@
 import java.io.*;
-import java.util.HashMap;
-import java.util.Scanner;
-import java.util.Formatter;
+import java.util.*;
 
 public class Student implements Serializable {
     private int studId;
@@ -10,8 +8,9 @@ public class Student implements Serializable {
     private int attainedCredits;
     private int totalCredits;
     private String courseID;
-    private int percentile;
+    private double percentile;
     private String grade;
+    private ArrayList<Course> courses = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -54,7 +53,7 @@ public class Student implements Serializable {
         this.courseID = courseID;
     }
 
-    public int getPercentile() {
+    public double getPercentile() {
         return percentile;
     }
 
@@ -166,11 +165,53 @@ public class Student implements Serializable {
             return null;
         }
     }
+    //calculate percentile
+    public void percentileCalculator(HashMap<Integer,Student> studentList)
+    {
+        int i=0;
+        int[] marks = new int[studentList.size()];
+        for(Student s : studentList.values())
+        {
+            marks[i]= s.attainedCredits;
+            i++;
+        }
+        double[] p = calculatePercentile(marks, 75);
+        i=0;
+        for(Student s : studentList.values())
+        {
+            s.percentile = p[i];
+            i++;
+        }
+
+    }
+    public static double[] calculatePercentile(int[] arr, int percentile) {
+        Arrays.sort(arr);
+        double[] p = new double[arr.length];
+        for(int i=0;i<arr.length;i++)
+        {
+            p[i] = ( i * 100.0) / (arr.length-1);
+        }
+        return p ;
+    }
+
+//    public Course addCourse()
+//    {
+//
+//    }
 }
 class Course{
     private String courseName;
     private int totalCredit;
     private int attainedCredit;
     private char grades;
+
+
 }
+//class Thread1 extends Thread
+//{
+//    public void run()
+//    {
+//
+//    }
+//}
 
