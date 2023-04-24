@@ -103,6 +103,7 @@ public class Student implements Serializable {
         {
             Student temp= AllStudentDetails.get(studId);
             System.out.println("\nWelcome " + studId);
+            System.out.println();
             if(temp.password.equals(password))
                 return true;
             else
@@ -112,9 +113,19 @@ public class Student implements Serializable {
     }
 
     public void printStudentDetails(){
+        Formatter fmt =new Formatter();
+        fmt.format("\n%10s %12s %20s %15s %12s","StudentId","Name","Attainedcredits","TotalCredits","Grade");
+        fmt.format("\n-------------------------------------------------------------------------------\n");
+        fmt.format("%10s", studId);
+        fmt.format("%15s", name);
+        fmt.format("%15s", attainedCredits);
+        fmt.format("%15s", totalCredits);
+        fmt.format("%14s\n",grade);
+        fmt.format("-------------------------------------------------------------------------------\n");
+        System.out.print(fmt);
 
-        System.out.println("studId" + "\t" + "name" + "\t" + "attainedCredits" + "\t" + "totalCredits" + "\t" + "grade");
-        System.out.println(getStudId() + "\t" + getName() + "\t" + getAttainedCredits() + "\t\t" + getTotalCredits() + "\t\t" + getGrade());
+//        System.out.println("studId" + "\t" + "name" + "\t" + "attainedCredits" + "\t" + "totalCredits" + "\t" + "grade");
+//        System.out.println(getStudId() + "\t" + getName() + "\t" + getAttainedCredits() + "\t\t" + getTotalCredits() + "\t\t" + getGrade());
     }
     public void changePassword(HashMap<Integer, Student> AllStudentDetails, int studId, Scanner sc){  //This will allow user to change his password.
         /*

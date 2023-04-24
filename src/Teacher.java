@@ -149,6 +149,7 @@ public class Teacher implements Serializable {
             System.out.println("You cannot edit marks. Student ID does not belong to your course!");
         }
         else {
+            Student currstud = new Student();
             tempStud.printStudentDetails();
             System.out.println("enter new marks : ");
             int newMarks = sc.nextInt();
@@ -199,7 +200,7 @@ public class Teacher implements Serializable {
     }
 
     public void printStudent(HashMap<Integer,Student> studList){
-
+        Student currstud = new Student();
         for(Map.Entry<Integer,Student> ele : studList.entrySet()){
             Student student = ele.getValue();
             if(student.getCourseID().equals(this.courseID))

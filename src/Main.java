@@ -21,18 +21,19 @@ public class Main {
 
 
             do {
-                System.out.print("\n1. Student Login/register  \n2. Teacher Login/Register \n3. Forgot Password \n4. Exit");
+                System.out.print("\n1. Student Login/register  \n2. Teacher Login/Register \n3. Exit");
                 System.out.print("\nEnter your choice: ");
                 ch = sc.nextInt();
+                System.out.println();
                 //As soon as the user chooses, one of these options will be selected and executed accordingly
                 switch (ch) {
                     case 1: {
+                        System.out.println("-----------------------Student Login-----------------------");
                         // student login
                         int ch2;
                         do {
-                            System.out.println("================== Student Login ==================");
                             System.out.println("\n1. Login \n2. Forgot Password\n3. Exit");
-
+                            System.out.print("\nEnter your choice: ");
                             ch2 = sc.nextInt();
                             switch (ch2) {
                                 case 1: {
@@ -80,9 +81,9 @@ public class Main {
                         // teacher login
                         int ch2;
                         do {
-                            System.out.println("================== Teacher Login ==================");
+                            System.out.println("-----------------------Teacher Login-----------------------");
                             System.out.println("\n1. Login \n2. Register \n3. Forgot Password\n4. Exit");
-
+                            System.out.print("Enter your choice: ");
                             ch2 = sc.nextInt();
                             switch (ch2) {
                                 case 1: {
@@ -98,7 +99,7 @@ public class Main {
                                         int ch3;
                                         do {
                                             System.out.println("\n1. Add Student \n2. Edit Marks \n3. View Students \n4. Delete Student \n5. Logout");
-                                            System.out.println("\nEnter Your Choice: ");
+                                            System.out.print("Enter Your Choice: ");
                                             ch3 = sc.nextInt();
                                             switch (ch3) {
                                                 case 1: {
@@ -186,9 +187,9 @@ public class Main {
     private static void init(){
         HashMap<String,Teacher> teacherList = new HashMap<String,Teacher>();
         HashMap<Integer,Student> studentList = new HashMap<Integer,Student>();
-        Teacher t = new Teacher("amit123","amit123","IT230","data structure",70);
+        Teacher t = new Teacher("amitMankodi","amit123","IT230","data structure",70);
         teacherList.put(t.getUname(),t);
-        Student s1 = new Student(1,"123","tanish","IT692",100,100,100,"A");
+        Student s1 = new Student(202212032,"tan123","tanish","IT692",100,100,100,"A");
         studentList.put(s1.getStudId(),s1);
         Teacher.writeToStudentDetails(studentList);
         Teacher.writeToTeacherDetails(teacherList);
