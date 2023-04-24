@@ -6,7 +6,7 @@ public class Student implements Serializable {
     private String name;
     private String password;
     private int attainedCredits;
-    private int totalCredits;
+    private int maximumCredits;
     private String courseID;
     private double percentile;
     private String grade;
@@ -38,11 +38,11 @@ public class Student implements Serializable {
     }
 
     public int getTotalCredits() {
-        return totalCredits;
+        return maximumCredits;
     }
 
     public void setTotalCredits(int totalCredits) {
-        this.totalCredits = totalCredits;
+        this.maximumCredits = totalCredits;
     }
 
     public String getCourseID() {
@@ -87,7 +87,7 @@ public class Student implements Serializable {
         this.name = name;
         this.courseID = courseID;
         this.attainedCredits = attainedCredits;
-        this.totalCredits = totalCredits;
+        this.maximumCredits = totalCredits;
         this.percentile = percentile;
         this.grade = grade;
     }
@@ -113,14 +113,15 @@ public class Student implements Serializable {
 
     public void printStudentDetails(){
         Formatter fmt =new Formatter();
-        fmt.format("\n%10s %12s %20s %15s %12s","StudentId","Name","Attainedcredits","TotalCredits","Grade");
-        fmt.format("\n-------------------------------------------------------------------------------\n");
+        fmt.format("\n%10s %12s %20s %15s %12s %10s","StudentId","Name","Attainedcredits","TotalCredits","Percentile","Grade");
+        fmt.format("\n---------------------------------------------------------------------------------------\n");
         fmt.format("%10s", studId);
         fmt.format("%15s", name);
         fmt.format("%15s", attainedCredits);
-        fmt.format("%15s", totalCredits);
-        fmt.format("%14s\n",grade);
-        fmt.format("-------------------------------------------------------------------------------\n");
+        fmt.format("%15s", maximumCredits);
+        fmt.format("%15s", percentile);
+        fmt.format("%15s\n",grade);
+        fmt.format("----------------------------------------------------------------------------------------\n");
         System.out.print(fmt);
 
 //        System.out.println("studId" + "\t" + "name" + "\t" + "attainedCredits" + "\t" + "totalCredits" + "\t" + "grade");
@@ -132,7 +133,7 @@ public class Student implements Serializable {
         */
         Student temp= AllStudentDetails.get(studId);
         Console c=System.console();
-        char[] passw = c.readPassword("\nEnter Password: ");
+        char[] passw = c.readPassword("\nEnter New Password: ");
         for(int i=0;i<passw.length;i++){
             System.out.print("*");
         }
@@ -142,7 +143,7 @@ public class Student implements Serializable {
     }
 
     public String getStudentString(){
-        return this.studId+","+this.password+","+this.name+","+this.courseID+","+this.attainedCredits+","+this.totalCredits+","+this.percentile+","+this.grade;
+        return this.studId+","+this.password+","+this.name+","+this.courseID+","+this.attainedCredits+","+this.maximumCredits+","+this.percentile+","+this.grade;
     }
 
     public static HashMap<Integer,Student> readStudentsFile(){

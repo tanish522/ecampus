@@ -52,19 +52,19 @@ public class Main {
                                     break;
                                 }
                                 case 2: {
-                                    System.out.println("\nEnter Student ID: ");
+                                    System.out.print("\nEnter Student ID: ");
                                     int studId = sc.nextInt();
                                     if (studentList.containsKey(studId)) {
                                         Student currStudent = new Student();
                                         currStudent.changePassword(studentList, studId, sc);
                                     } else {
-                                        System.out.println("\nStudent ID not available! ");
+                                        System.out.print("\nStudent ID not available! ");
                                     }
 
                                     break;
                                 }
                                 case 3: {
-                                    System.out.println("Exiting");
+                                    System.out.println("Thank You!");
                                     break;
                                 }
                                 default: {
@@ -94,8 +94,6 @@ public class Main {
                                     Teacher currteacher = new Teacher();
                                     if (currteacher.loginTeacher(teacherList, username, password)) {
                                         System.out.println("Login Successful");
-                                        currteacher = teacherList.get(username);
-                                        System.out.println("currteacher " + currteacher);
                                         int ch3;
                                         do {
                                             System.out.println("\n1. Add Student \n2. Edit Marks \n3. View Students \n4. Delete Student \n5. Logout");
@@ -124,7 +122,6 @@ public class Main {
                                                     break;
                                                 }
                                                 default: {
-
                                                     System.out.println("\nEnter Valid Choice! ");
                                                 }
                                             }
@@ -146,7 +143,7 @@ public class Main {
                                 }
                                 case 3: {
                                     Teacher currteacher = new Teacher();
-                                    System.out.println("\nEnter Username: ");
+                                    System.out.print("\nEnter Username: ");
                                     String uname = sc.next();
                                     currteacher.changePassword(teacherList, uname, sc);
                                     //Call Forgot Password Method
@@ -154,11 +151,11 @@ public class Main {
                                     break;
                                 }
                                 case 4: {
-                                    System.out.println("Exiting");
+                                    System.out.print("\nThank You!");
                                     break;
                                 }
                                 default: {
-                                    System.out.println("Invalid Choice! ");
+                                    System.out.print("\nInvalid Choice! ");
                                     break;
                                 }
 
@@ -167,21 +164,17 @@ public class Main {
                         break;
                     }
                     case 3: {
-                        Teacher newTeacher = new Teacher();
-                        newTeacher.registerTeacher(teacherList, sc);
-                    }
-                    case 4: {
-                        System.out.println("Exit");
+                        System.out.print("\nThank you!");
                         break;
                     }
                     default: {
-                        System.out.println("Enter Valid Choice! ");
+                        System.out.print("\nEnter Valid Choice! ");
                         break;
                     }
                 }
             } while (ch != 4);
         }catch (InputMismatchException e){
-            System.out.println("\n Wrong Input! ");
+            System.out.print("\n Wrong Input! ");
         }
     }
     private static void init(){
@@ -189,7 +182,7 @@ public class Main {
         HashMap<Integer,Student> studentList = new HashMap<Integer,Student>();
         Teacher t = new Teacher("amitMankodi","amit123","IT230","data structure",70);
         teacherList.put(t.getUname(),t);
-        Student s1 = new Student(202212032,"tan123","tanish","IT692",100,100,100,"A");
+        Student s1 = new Student(202212032,"tan123","tanish","IT230",100,100,100,"A");
         studentList.put(s1.getStudId(),s1);
         Teacher.writeToStudentDetails(studentList);
         Teacher.writeToTeacherDetails(teacherList);
@@ -212,7 +205,7 @@ public class Main {
         }
         else{
             Scanner scan = new Scanner(System.in);
-            System.out.print("Enter password: ");
+            System.out.print("\nEnter password: ");
             password = scan.next();
             return password;
         }

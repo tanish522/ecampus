@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -108,21 +107,22 @@ public class Teacher implements Serializable {
     */
     public void registerTeacher(HashMap<String,Teacher> teacherDetails,Scanner sc) {
 
-        System.out.print("Enter Teacher's Username: ");
+        System.out.print("\nEnter Teacher's Username: ");
         this.uname = sc.next();
         while(teacherDetails.containsKey(uname)){
-            System.out.println("Username already exists. \nEnter another username : ");
+            System.out.print("\nUsername already exists. \nEnter another username : ");
             this.uname = sc.next();
         }
-        System.out.print("Enter Teacher's Password: ");
+        System.out.print("\nEnter Teacher's Password: ");
         this.password = sc.next();
-        System.out.print("Enter Teacher's Course ID: ");
+        System.out.print("\nEnter Teacher's Course ID: ");
         this.courseID = sc.next();
-        System.out.print("Enter Teacher's Course Name: ");
+        System.out.print("\nEnter Teacher's Course Name: ");
         this.courseName = sc.next();
-        System.out.print("Enter Passing Criteria of course(%): ");
+        System.out.print("\nEnter Passing Criteria of course(%): ");
         this.passingCriteria = sc.nextInt();
-        this.studentList = readStudentsFile();  // Input student details from student.txt file
+        this.studentList = readStudentsFile();
+        System.out.println();
 
     }
     public  static String hiddenPassword(){
@@ -142,18 +142,18 @@ public class Teacher implements Serializable {
     // edit marks then edit hashmap of studentlist and write that object to student.dat file
     void editMarks(Scanner sc){  //done
 
-        System.out.println("Enter student id you want to edit: ");
+        System.out.print("\nEnter student id you want to edit: ");
         int sID = sc.nextInt();
         Student tempStud = studentList.get(sID);
         if(!tempStud.getCourseID().equals(this.courseID)){
-            System.out.println("You cannot edit marks. Student ID does not belong to your course!");
+            System.out.println("\nYou cannot edit marks. Student ID does not belong to your course!");
         }
         else {
             Student currstud = new Student();
             tempStud.printStudentDetails();
-            System.out.println("enter new marks : ");
+            System.out.print("\nenter new marks : ");
             int newMarks = sc.nextInt();
-            System.out.println("enter new grade : ");
+            System.out.print("\nenter new grade : ");
             String newGrade = sc.next();
             tempStud.setAttainedCredits(newMarks);
             tempStud.setGrade(newGrade);
@@ -164,22 +164,24 @@ public class Teacher implements Serializable {
     }
 
     void addStudent(Scanner sc){  //done
-        System.out.println("Enter student id: ");
+        System.out.print("\nEnter student id: ");
         int studId = sc.nextInt();
         while (studentList.containsKey(studId)){
-            System.out.println("Student ID already exists. Enter new student ID : ");
+            System.out.print("\nStudent ID already exists. Enter new student ID : ");
             studId = sc.nextInt();
         }
         String password = String.valueOf(studId); // store default password for student
-        System.out.println("Enter student name: ");
+        System.out.print("\nEnter student name: ");
         String name = sc.next();
-        System.out.println("Enter student attained credits: ");
-        int attainedCredits = sc.nextInt();
-        System.out.println("Enter student total credits: ");
+        System.out.print("\nEnter student total credits that student can get: ");
         int totalCredits = sc.nextInt();
-        System.out.println("Enter student percentile: ");
-        int percentile = sc.nextInt();
-        System.out.println("Enter student grade: ");
+        System.out.print("\nEnter student attained credits: ");
+        int attainedCredits = sc.nextInt();
+        //System.out.print("\nEnter student percentile: ");
+        int percentile = 100;
+        MyThread perc = new MyThread(studentList);
+        perc.start();
+        System.out.print("\nEnter student grade: ");
         String grade = sc.next();
         Student s = new Student(studId, password, name, this.courseID, attainedCredits, totalCredits, percentile, grade);
         studentList.put(studId,s);
@@ -187,11 +189,11 @@ public class Teacher implements Serializable {
     }
 
     void deleteStudent(Scanner sc){  //done
-        System.out.println("Enter student id you want to delete: ");
+        System.out.print("\nEnter student id you want to delete: ");
         int sID = sc.nextInt();
         Student tempStud = studentList.get(sID);
         if(!tempStud.getCourseID().equals(this.courseID)){
-            System.out.println("You cannot delete this student. Student ID does not belong to your course!");
+            System.out.print("\nYou cannot delete this student. Student ID does not belong to your course!");
         }
         else{
             studentList.remove(sID);
@@ -278,7 +280,33 @@ public class Teacher implements Serializable {
     }
 }
 
+class MyThread extends Thread{
+    private HashMap<Integer,Student> studentList = new HashMap<>();
+    public MyThread(){}
+    public MyThread(HashMap<Integer,Student> studentList){
+        this.studentList = studentList;
+    }
+    @Override
+    public void run(){
+        int totalStudents = studentList.size();
+        for (int key: studentList.keySet()) {
+            Student temp = studentList.get(key);
+            int lowerStudents = getLowerStudent(studentList, temp.getAttainedCredits());
+            if(lowerStudents!=0) temp.setPercentile(lowerStudents/totalStudents*100);
+            else temp.setPercentile(100);
+        }
+    }
 
+    public int getLowerStudent(HashMap<Integer,Student> studentList, int credits){
+        int count = 0;
+        for (int key: studentList.keySet()) {
+            Student temp = studentList.get(key);
+            count += (temp.getAttainedCredits() < credits) ? 1:0;
+        }
+        return count;
+    }
+
+}
 class TeachersList {
     HashMap<String,Teacher> teachersList = new HashMap<String,Teacher>();
 
